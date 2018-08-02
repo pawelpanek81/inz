@@ -3,7 +3,11 @@ server:
 
 spring:
   application:
-    name: ZuulServer
+    name: zuul-server
+  cloud:
+    config:
+      uri: http://config-server:9090
+      fail-fast: true
 
 eureka:
   client:
@@ -14,9 +18,14 @@ zuul:
   host:
     socket-timeout-millis: 30000
   routes:
-    MapServiceUI:
-      serviceId: MapService
-    EchoServiceUI:
-      serviceId: EchoService
-    EchoDashboardUI:
-      serviceId: EchoDashboard
+    map-service-ui:
+      serviceId: map-service
+    echo-service-ui:
+      serviceId: echo-service
+    echo-dashboard-ui:
+      serviceId: echo-dashboard
+    auth-service:
+      path: /auth/**
+      service-id: auth-server
+      strip-prefix: false
+      sensitive-headers: Cookie,Set-Cookie

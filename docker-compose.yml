@@ -23,6 +23,18 @@ services:
       - "9092:9092"
     depends_on:
       - eureka-server
+      - config-server
+    restart: always
+
+  auth-server:
+    container_name: mycar-auth-server
+    image: mycar/auth-server:latest
+    ports:
+      - "9093:9093"
+    depends_on:
+      - eureka-server
+      - config-server
+    restart: always
 
   echo-service:
     container_name: mycar-echo-service
