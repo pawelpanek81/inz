@@ -17,6 +17,7 @@
     <module>map-service</module>
     <module>echo-service</module>
     <module>echo-dashboard</module>
+    <module>account-service</module>
   </modules>
 
   <parent>

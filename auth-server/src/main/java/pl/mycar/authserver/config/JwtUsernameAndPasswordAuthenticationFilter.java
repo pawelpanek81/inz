@@ -13,6 +13,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import pl.mycar.configserver.jwtconfig.JwtConfig;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -78,6 +79,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         .signWith(SignatureAlgorithm.HS512, jwtConfig.getSecret().getBytes())
         .compact();
 
-    response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + token);
+    response.addHeader(jwtConfig.getHeader(), jwtConfig.getPrefix() + " " + token);
   }
 }

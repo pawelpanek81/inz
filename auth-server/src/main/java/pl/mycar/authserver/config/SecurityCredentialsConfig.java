@@ -8,13 +8,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import pl.mycar.configserver.jwtconfig.JwtConfig;
 import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
+  private final JwtConfig jwtConfig;
+
   @Autowired
-  private JwtConfig jwtConfig;
+  public SecurityCredentialsConfig(JwtConfig jwtConfig) {
+    this.jwtConfig = jwtConfig;
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {

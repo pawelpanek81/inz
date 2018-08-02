@@ -65,3 +65,29 @@ services:
       - config-server
       - eureka-server
     restart: always
+
+  account-service:
+    container_name: mycar-account-service
+    image: mycar/account-service:latest
+    ports:
+      - "8083-8083"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  db-postgres-account-service:
+    container_name: postgres-account
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=account-db-user
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=account-service-db
+    volumes:
+      - postgres-account-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5000:5432"
+
+volumes:
+  postgres-account-data:
