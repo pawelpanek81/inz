@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  config-server:
+    container_name: mycar-config-server
+    image: mycar/config-server:latest
+    ports:
+      - "9090:9090"
+
+  eureka-server:
+    container_name: mycar-eureka-server
+    image: mycar/eureka-server:latest
+    ports:
+      - "9091:9091"
+    depends_on:
+      - config-server
+    restart: always
+
+  zuul-server:
+    container_name: mycar-zuul-server
+    image: mycar/zuul-server:latest
+    ports:
+      - "9092:9092"
+    depends_on:
+      - eureka-server
+
+  echo-service:
+    container_name: mycar-echo-service
+    image: mycar/echo-service:latest
+    ports:
+      - "8080-8080"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  echo-dashboard:
+    container_name: mycar-echo-dashboard
+    image: mycar/echo-dashboard:latest
+    ports:
+      - "8081-8081"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  map-service:
+    container_name: mycar-map-service
+    image: mycar/map-service:latest
+    ports:
+      - "8082-8082"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
