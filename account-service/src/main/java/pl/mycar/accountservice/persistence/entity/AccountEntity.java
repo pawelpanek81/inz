@@ -19,7 +19,7 @@ public class AccountEntity {
   @SequenceGenerator(name = "accounts_generator",
       sequenceName = "accounts_id_seq")
   @GeneratedValue(generator = "accounts_generator")
-  @Column(name = "id", nullable = false)
+  @Column(name = "id", nullable = false, unique = true)
   private Integer id;
 
   @Column(name = "username", nullable = false, unique = true)

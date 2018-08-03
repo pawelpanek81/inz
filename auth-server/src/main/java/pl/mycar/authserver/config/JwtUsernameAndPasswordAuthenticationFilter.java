@@ -13,7 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import pl.mycar.configserver.jwtconfig.JwtConfig;
+import pl.mycar.accountservice.service.AccountService;
+import pl.mycar.authserver.model.dto.UserCredentials;
+import pl.mycar.jwtconfig.JwtConfig;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -30,12 +32,6 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
   private final JwtConfig jwtConfig;
 
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Data
-  private static class UserCredentials {
-    private String username, password;
-  }
 
   JwtUsernameAndPasswordAuthenticationFilter(AuthenticationManager authenticationManager,
                                              JwtConfig jwtConfig) {

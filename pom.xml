@@ -18,6 +18,8 @@
     <module>echo-service</module>
     <module>echo-dashboard</module>
     <module>account-service</module>
+    <module>jwt-filter</module>
+    <module>jwt-config</module>
   </modules>
 
   <parent>

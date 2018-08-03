@@ -1,14 +1,13 @@
 package pl.mycar.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.mycar.configserver.jwtconfig.JwtConfig;
+import pl.mycar.jwtconfig.JwtConfig;
+
 import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
@@ -32,10 +31,5 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
         .anyRequest().permitAll();
-  }
-
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 }

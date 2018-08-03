@@ -1,4 +1,4 @@
-package pl.mycar.configserver.jwtconfig;
+package pl.mycar.jwtconfig;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
