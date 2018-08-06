@@ -14,11 +14,25 @@ eureka:
     serviceUrl:
       defaultZone: http://eureka-server:9091/eureka
 
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
 zuul:
   ignoredServices: '*'
   prefix: /api/v1.0
+  ribbonIsolationStrategy: THREAD
   host:
     socket-timeout-millis: 30000
+    connect-timeout-millis: 30000
   routes:
     map-service-ui:
       serviceId: map-service

@@ -3,9 +3,6 @@ package pl.mycar.authserver.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,12 +10,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import pl.mycar.accountservice.service.AccountService;
 import pl.mycar.authserver.model.dto.UserCredentials;
 import pl.mycar.jwtconfig.JwtConfig;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -63,7 +58,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
   protected void successfulAuthentication(HttpServletRequest request,
                                           HttpServletResponse response,
                                           FilterChain chain,
-                                          Authentication auth) throws IOException, ServletException {
+                                          Authentication auth) {
     Long now = System.currentTimeMillis();
     String token = Jwts.builder()
         .setSubject(auth.getName())

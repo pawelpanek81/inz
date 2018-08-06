@@ -2,10 +2,13 @@ package pl.mycar.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.mycar.jwtconfig.JwtConfig;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,10 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
   private final JwtConfig jwtConfig;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final UserDetailsService userDetailsService;
 
   @Autowired
-  public SecurityCredentialsConfig(JwtConfig jwtConfig) {
+  public SecurityCredentialsConfig(JwtConfig jwtConfig,
+                                   BCryptPasswordEncoder bCryptPasswordEncoder,
+                                   UserDetailsService userDetailsService) {
     this.jwtConfig = jwtConfig;
+    this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    this.userDetailsService = userDetailsService;
   }
 
   @Override
@@ -31,5 +40,10 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
         .anyRequest().permitAll();
+  }
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
   }
 }
