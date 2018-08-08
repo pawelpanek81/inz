@@ -7,6 +7,6 @@ import pl.mycar.accountservice.persistence.entity.AuthorityEntity;
 import java.util.List;
 
 @Repository
-public interface AuthorityRepository extends JpaRepository<AuthorityEntity, Integer> {
+public interface AuthorityRepository extends JpaRepository<AuthorityEntity, Long> {
   List<AuthorityEntity> findByAccountId(Integer id);
 }

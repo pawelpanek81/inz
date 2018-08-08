@@ -6,7 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @ComponentScan({"pl.mycar.jwt", "pl.mycar.mapservice"})
 public class MapServiceApplication {
   public static void main(String[] args) {
