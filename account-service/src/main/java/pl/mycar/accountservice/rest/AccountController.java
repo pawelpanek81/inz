@@ -54,7 +54,7 @@ public class AccountController {
     return ResponseEntity.created(location).build();
   }
 
-  @GetMapping(value = "/info", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<ReadAccountDTO> accountInfo(Principal principal) {
     Optional<AccountEntity> optionalOfAccountEntity = accountService.readByPrincipal(principal);
 

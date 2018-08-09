@@ -24,7 +24,8 @@ public class RatingCommentEntity {
   @Column(name = "added_by", nullable = false)
   private String addedBy;
 
-  @Column(name = "parent")
+  @ManyToOne
+  @JoinColumn(name = "parent")
   private RatingEntity parent;
 
   @Column(name = "comment", nullable = false)

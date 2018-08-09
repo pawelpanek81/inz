@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "map_points")
@@ -37,9 +38,22 @@ public class MapPointEntity {
   @Column(name = "city", nullable = false)
   private String city;
 
+  @Column(name = "www")
+  private String www;
+
+  @Column(name = "phone")
+  private String phone;
+
   @Column(name = "latitude", nullable = false)
   private String latitude;
 
   @Column(name = "longitude", nullable = false)
   private String longitude;
+
+  @Column(name = "added_at")
+  private LocalDateTime addedAt;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "point_type_id")
+  private PointTypeEntity pointType;
 }

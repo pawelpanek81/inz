@@ -89,5 +89,16 @@ services:
     ports:
       - "5000:5432"
 
+    db-postgres-map-service:
+      container_name: postgres-map
+      image: postgres:latest
+      environment:
+        - POSTGRES_USER=map-db-user
+        - POSTGRES_PASSWORD=toor
+        - POSTGRES_DB=map-service-db
+      volumes:
+        - postgres-map-data:/var/lib/postgresql/data
+
 volumes:
   postgres-account-data:
+  postgres-map-data:

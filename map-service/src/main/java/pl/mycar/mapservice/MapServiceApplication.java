@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 //@EnableDiscoveryClient
+//TODO rethink DTO's
 @ComponentScan({"pl.mycar.jwt", "pl.mycar.mapservice"})
 public class MapServiceApplication {
   public static void main(String[] args) {
