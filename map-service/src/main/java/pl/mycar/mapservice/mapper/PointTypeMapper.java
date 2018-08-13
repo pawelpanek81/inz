@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public class PointTypeMapper {
 
-  public static Function<? super PointTypeEntity, ? extends ReadPointTypeDTO> toDTOmapper = entity ->
+  public static Function<? super PointTypeEntity, ? extends ReadPointTypeDTO> toDTOMapper = entity ->
       new ReadPointTypeDTO(
           entity.getId(),
           entity.getType(),

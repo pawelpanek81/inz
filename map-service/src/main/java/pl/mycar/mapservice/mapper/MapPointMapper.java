@@ -15,6 +15,7 @@ import java.util.function.Function;
 @Component
 public class MapPointMapper {
   private PointTypeRepository pointTypeRepository;
+  private PointTypeMapper pointTypeMapper;
 
   @Autowired
   public MapPointMapper(PointTypeRepository pointTypeRepository) {
@@ -34,7 +35,7 @@ public class MapPointMapper {
           .latitude(entity.getLatitude())
           .longitude(entity.getLongitude())
           .addedAt(entity.getAddedAt())
-          .type(entity.getPointType().getType())
+          .type(PointTypeMapper.toDTOMapper.apply(entity.getPointType()))
           .build();
 
   public MapPointEntity mapToEntity(CreateMapPointDTO dto) {
