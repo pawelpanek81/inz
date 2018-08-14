@@ -30,7 +30,7 @@ public class RatingEntity {
   private String comment;
 
   @Column(name = "rating")
-  private Double rating;
+  private String rating;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "map_point_id")

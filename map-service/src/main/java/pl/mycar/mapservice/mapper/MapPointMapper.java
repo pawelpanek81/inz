@@ -1,26 +1,14 @@
 package pl.mycar.mapservice.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import pl.mycar.mapservice.exception.PointTypeNotFoundException;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
+import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
 import pl.mycar.mapservice.persistence.entity.MapPointEntity;
 import pl.mycar.mapservice.persistence.entity.PointTypeEntity;
-import pl.mycar.mapservice.persistence.repository.PointTypeRepository;
 
-import java.util.Optional;
 import java.util.function.Function;
 
-@Component
 public class MapPointMapper {
-  private PointTypeRepository pointTypeRepository;
-  private PointTypeMapper pointTypeMapper;
-
-  @Autowired
-  public MapPointMapper(PointTypeRepository pointTypeRepository) {
-    this.pointTypeRepository = pointTypeRepository;
-  }
 
   public static Function<? super MapPointEntity, ? extends ReadMapPointDTO> toDTOMapper = entity ->
       ReadMapPointDTO.builder()
@@ -38,13 +26,7 @@ public class MapPointMapper {
           .type(PointTypeMapper.toDTOMapper.apply(entity.getPointType()))
           .build();
 
-  public MapPointEntity mapToEntity(CreateMapPointDTO dto) {
-    Optional<PointTypeEntity> optOfType = pointTypeRepository.findByType(dto.getType());
-
-    if (!optOfType.isPresent()) {
-      throw new PointTypeNotFoundException();
-    }
-
+  public static MapPointEntity mapToEntity(CreateMapPointDTO dto) {
     return MapPointEntity.builder()
         .companyName(dto.getCompanyName())
         .info(dto.getInfo())
@@ -54,7 +36,17 @@ public class MapPointMapper {
         .city(dto.getCity())
         .latitude(dto.getLatitude())
         .longitude(dto.getLongitude())
-        .pointType(optOfType.get())
+        .pointType(null)
         .build();
+  }
+
+  static class PointTypeMapper {
+    static Function<? super PointTypeEntity, ? extends ReadPointTypeDTO> toDTOMapper = entity ->
+        new ReadPointTypeDTO(
+            entity.getId(),
+            entity.getType(),
+            entity.getDescription(),
+            entity.getIconFile()
+        );
   }
 }
