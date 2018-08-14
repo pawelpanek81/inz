@@ -1,10 +1,14 @@
 package pl.mycar.mapservice.model.dto.point;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
+@NoArgsConstructor
+@Setter
 public class CreateMapPointDTO {
   @NotBlank
   private String companyName;

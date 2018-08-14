@@ -22,9 +22,9 @@ public class PointTypeEntity {
   @Column(name = "type", nullable = false)
   private String type;
 
-  @Column(name = "type", nullable = false)
+  @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "type", nullable = false)
+  @Column(name = "iconFile", nullable = false)
   private String iconFile;
 }

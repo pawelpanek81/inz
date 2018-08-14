@@ -26,13 +26,13 @@ class MapController {
     this.mapService = mapService;
   }
 
-  @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> addNewPoint(@Valid CreateMapPointDTO dto, Principal principal) {
+  @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<?> addNewPoint(@Valid @RequestBody CreateMapPointDTO dto, Principal principal) {
     mapService.create(dto, principal);
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<ReadMapPointDTO>> getAllPoints() {
     List<ReadMapPointDTO> mapPointDTOS = mapService.readAll();
     return ResponseEntity.ok(mapPointDTOS);
