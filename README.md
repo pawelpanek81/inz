@@ -1,7 +1,15 @@
 # Web application supporting car servicing
 
 ## Running in maven:
-### Pre-requirements:
+
+### set profiles in VM options:
+```
+-Dspring.profiles.active=dev
+```
+
+### Alternatively:
+
+### edit hosts:
 Open `C:/Windows/System32/drivers/etc/hosts`
 
 append:
@@ -11,7 +19,14 @@ append:
 127.0.0.1 auth-server
 127.0.0.1 zuul-server
 127.0.0.1 account-service
+127.0.0.1 db-postgres-account-service
+127.0.0.1 db-postgres-map-service
+```
+
+you can also run databases in docker:
+```
 192.168.99.100 db-postgres-account-service
+192.168.99.100 db-postgres-map-service
 ```
 
 start databases in docker:
@@ -47,3 +62,4 @@ and wait few minutes
 | Database name | Docker host | User | Password | Docker service name |
 | --- | --- | --- | --- | --- |
 | account-service-db | 5432 | account-db-user | toor | db-postgres-account-service |
+| map-service-db | 5432 | map-db-user | toor | db-postgres-map-service |
