@@ -8,6 +8,8 @@ spring:
     config:
       uri: http://config-server:9090
       fail-fast: true
+  datasource:
+      initialization-mode: always
 
 eureka:
   client:

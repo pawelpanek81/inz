@@ -6,7 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@ComponentScan({"pl.mycar.jwt", "pl.mycar.accountservice" })
+@ComponentScan({"pl.mycar.config", "pl.mycar.accountservice" })
 @EnableSwagger2
 public class AccountServiceApplication {
   public static void main(String[] args) {
