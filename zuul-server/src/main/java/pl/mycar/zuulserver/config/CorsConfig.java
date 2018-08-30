@@ -1,27 +1,25 @@
-package pl.mycar.config;
+package pl.mycar.zuulserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import pl.mycar.config.jwt.JwtTokenAuthenticationFilter;
-import pl.mycar.jwtconfig.JwtConfig;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity
-@ComponentScan("pl.mycar.jwtconfig")
-public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
-
-  private JwtConfig jwtConfig;
+public class CorsConfig extends WebSecurityConfigurerAdapter {
+  private CustomCorsFilter customCorsFilter;
 
   @Autowired
-  public SecurityTokenConfig(JwtConfig jwtConfig) {
-    this.jwtConfig = jwtConfig;
+  public CorsConfig(CustomCorsFilter customCorsFilter) {
+    this.customCorsFilter = customCorsFilter;
   }
 
   @Override
@@ -32,9 +30,15 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
         .and()
         .exceptionHandling().authenticationEntryPoint((req, res, e) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))
         .and()
-        .addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(customCorsFilter, ChannelProcessingFilter.class)
         .authorizeRequests()
-        .antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
         .anyRequest().permitAll();
+  }
+
+  @Bean
+  CorsConfigurationSource corsConfigurationSource() {
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    return source;
   }
 }

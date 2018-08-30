@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableZuulProxy
 @EnableDiscoveryClient
-@ComponentScan({"pl.mycar.config", "pl.mycar.zuulserver"})
+@ComponentScan({"pl.mycar.zuulserver"})
 @EnableSwagger2
 public class ZuulApplication {
 

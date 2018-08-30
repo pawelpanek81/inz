@@ -28,7 +28,7 @@ public class AccountEntity {
   @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "surname", nullable = false)
+  @Column(name = "surname")
   private String surname;
 
   @Column(name = "password", nullable = false)

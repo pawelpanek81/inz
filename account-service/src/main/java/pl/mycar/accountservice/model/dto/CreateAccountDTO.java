@@ -13,15 +13,15 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class CreateAccountDTO {
   @NotBlank
-  @Size(min = 3, max = 12)
+  @Size(min = 3, max = 16)
   private String username;
 
   @NotBlank
   @Size(min = 3, max = 12)
   private String name;
 
-  @NotBlank
-  @Size(min = 3, max = 12)
+
+  @Size(max = 32)
   private String surname;
 
   @NotBlank

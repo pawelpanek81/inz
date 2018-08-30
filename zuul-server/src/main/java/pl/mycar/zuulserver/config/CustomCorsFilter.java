@@ -1,4 +1,4 @@
-package pl.mycar.config.cors;
+package pl.mycar.zuulserver.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
