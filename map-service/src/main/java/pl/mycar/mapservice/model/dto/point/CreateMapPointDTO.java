@@ -26,6 +26,9 @@ public class CreateMapPointDTO {
   private String city;
 
   @NotBlank
+  private String zipCode;
+
+  @NotBlank
   private String latitude;
 
   @NotBlank

@@ -10,6 +10,9 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class CreateRatingDTO {
   @NotBlank
+  private String header;
+
+  @NotBlank
   private String comment;
 
   private String rating;

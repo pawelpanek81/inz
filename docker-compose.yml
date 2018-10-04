@@ -36,26 +36,6 @@ services:
       - config-server
     restart: always
 
-  echo-service:
-    container_name: mycar-echo-service
-    image: mycar/echo-service:latest
-    ports:
-      - "8080-8080"
-    depends_on:
-      - config-server
-      - eureka-server
-    restart: always
-
-  echo-dashboard:
-    container_name: mycar-echo-dashboard
-    image: mycar/echo-dashboard:latest
-    ports:
-      - "8081-8081"
-    depends_on:
-      - config-server
-      - eureka-server
-    restart: always
-
   map-service:
     container_name: mycar-map-service
     image: mycar/map-service:latest
@@ -89,18 +69,18 @@ services:
     ports:
       - "5000:5432"
 
-    db-postgres-map-service:
-      container_name: postgres-map
-      image: postgres:latest
-      environment:
-        - POSTGRES_USER=map-db-user
-        - POSTGRES_PASSWORD=toor
-        - POSTGRES_DB=map-service-db
-      volumes:
-        - postgres-map-data:/var/lib/postgresql/data
-      restart: always
-      ports:
-        - "5001:5432"
+  db-postgres-map-service:
+    container_name: postgres-map
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=map-db-user
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=map-service-db
+    volumes:
+      - postgres-map-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5001:5432"
 
 volumes:
   postgres-account-data:

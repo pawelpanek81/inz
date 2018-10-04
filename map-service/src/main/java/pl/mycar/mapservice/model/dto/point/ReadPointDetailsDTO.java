@@ -11,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReadPointDetailsDTO {
-  ReadMapPointDTO mapPoint;
-  List<ReadRatingDTO> ratings;
+  private ReadMapPointDTO mapPoint;
+  private List<ReadRatingDTO> ratings;
 }

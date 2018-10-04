@@ -32,9 +32,12 @@ you can also run databases in docker:
 start databases in docker:
 ```cmd
 docker-compose run -p 5000:5432 db-postgres-account-service
+docker-compose run -p 5001:5432 db-postgres-map-service
 ```
 
-Compile all modules, and start in order:
+Firstly Maven clean and install jwt-config/pom.xml,
+
+Then compile modules, and start in order:
 1. config-server
 1. eureka-server
 1. zuul-server
@@ -59,7 +62,7 @@ and wait few minutes
 | Account Service | 8083 | account-service |
 
 ### Databases:
-| Database name | Docker host | User | Password | Docker service name |
-| --- | --- | --- | --- | --- |
-| account-service-db | 5432 | account-db-user | toor | db-postgres-account-service |
-| map-service-db | 5432 | map-db-user | toor | db-postgres-map-service |
+| Database name | Docker host | Docker-Compose Exposed Port | User | Password | Docker service name |
+| --- | --- | --- | --- | --- | --- |
+| account-service-db | 5432 | 5000 | account-db-user | toor | db-postgres-account-service |
+| map-service-db | 5432 | 5001 | map-db-user | toor | db-postgres-map-service |

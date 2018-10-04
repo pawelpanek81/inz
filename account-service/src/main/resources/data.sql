@@ -1,1 +1,2 @@
 INSERT INTO public.accounts(id, email, name, surname, username, password) VALUES (1, 'admin@admin.pl', 'Jan', 'Kowalski', 'admin', '$2a$04$bJ1tcN5YHfcMNoFBXWMvXuBDnlKOg7VT7NOM5AdVNTc5cz02faJtS');
+INSERT INTO public.authorities(id, authority, account) VALUES (1, 'ROLE_USER', 1);

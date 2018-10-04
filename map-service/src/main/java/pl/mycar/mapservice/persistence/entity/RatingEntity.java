@@ -26,6 +26,9 @@ public class RatingEntity {
   @Column(name = "added_by", nullable = false)
   private String addedBy;
 
+  @Column(name = "header", nullable = false)
+  private String header;
+
   @Column(name = "comment", nullable = false)
   private String comment;
 

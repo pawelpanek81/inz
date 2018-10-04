@@ -38,6 +38,9 @@ public class MapPointEntity {
   @Column(name = "city", nullable = false)
   private String city;
 
+  @Column(name = "zip_code", nullable = false)
+  private String zipCode;;
+
   @Column(name = "www")
   private String www;
 
@@ -56,4 +59,7 @@ public class MapPointEntity {
   @ManyToOne(optional = false)
   @JoinColumn(name = "point_type_id")
   private PointTypeEntity pointType;
+
+  @Column(name = "approved")
+  private Boolean approved;
 }

@@ -19,6 +19,7 @@ public class ReadMapPointDTO {
   private String info;
   private String address;
   private String city;
+  private String zipCode;
   private String www;
   private String phone;
   private String latitude;

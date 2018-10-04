@@ -13,6 +13,7 @@ import java.util.List;
 public class ReadRatingDTO {
   private Long id;
   private String addedBy;
+  private String header;
   private String comment;
   private String rating;
   private LocalDateTime addedAt;
