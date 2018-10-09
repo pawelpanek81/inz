@@ -1,18 +1,17 @@
 # Web application supporting car servicing
 
-## Running in maven:
+## Running locally:
 
-### set profiles in VM options:
+#### Dev profile:
+Set dev profile in VM options for each microservice:
 ```
 -Dspring.profiles.active=dev
 ```
 
-### Alternatively:
+#### Default profile:
+Edit hosts - open `C:/Windows/System32/drivers/etc/hosts`
 
-### edit hosts:
-Open `C:/Windows/System32/drivers/etc/hosts`
-
-append:
+append microservices domain names to ip:
 ```
 127.0.0.1 config-server
 127.0.0.1 eureka-server
@@ -22,8 +21,7 @@ append:
 127.0.0.1 db-postgres-account-service
 127.0.0.1 db-postgres-map-service
 ```
-
-you can also run databases in docker:
+append database domain names to ip:
 ```
 192.168.99.100 db-postgres-account-service
 192.168.99.100 db-postgres-map-service
@@ -44,11 +42,16 @@ Then compile modules, and start in order:
 1. others
 
 ## Running in docker:
-fire command:
+Fire command:
 ```cmd
 docker-compose up -d
 ```
 and wait few minutes
+
+To remove containers:
+```cmd
+docker-compose down
+```
 
 ## Information's
 ### Services and servers ports:
