@@ -1,6 +1,7 @@
 package pl.mycar.mapservice.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +40,10 @@ class MapController {
   }
 
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<ReadPointDetailsDTO> getPointDetails(@PathVariable Long id) {
+  ResponseEntity<ReadPointDetailsDTO> getPointDetails(@PathVariable Long id, Pageable pageable) {
     ReadPointDetailsDTO dto;
     try {
-      dto = mapService.read(id);
+      dto = mapService.read(id, pageable);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
     }

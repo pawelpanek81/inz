@@ -1,5 +1,6 @@
 package pl.mycar.mapservice.service;
 
+import org.springframework.data.domain.Pageable;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
@@ -15,7 +16,7 @@ public interface MapService {
 
   List<ReadMapPointDTO> readAll();
 
-  ReadPointDetailsDTO read(Long id);
+  ReadPointDetailsDTO read(Long id, Pageable pageable);
 
   ReadRatingDTO addRating(Long mapPointId, CreateRatingDTO dto, Principal principal);
 }

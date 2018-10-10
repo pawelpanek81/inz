@@ -1,6 +1,8 @@
 package pl.mycar.mapservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
 import pl.mycar.mapservice.exception.PointTypeNotFoundException;
@@ -24,7 +26,6 @@ import pl.mycar.mapservice.persistence.repository.RatingRepository;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,8 +73,8 @@ public class MapServiceImpl implements MapService {
   }
 
   @Override
-  public ReadPointDetailsDTO read(Long id) {
-    ReadPointDetailsDTO dto = new ReadPointDetailsDTO(null, new ArrayList<>());
+  public ReadPointDetailsDTO read(Long id, Pageable pageable) {
+    ReadPointDetailsDTO dto = new ReadPointDetailsDTO(null, null);
 
     Optional<MapPointEntity> optionalOfMapPoint = mapPointRepository.findById(id);
 
@@ -82,16 +83,17 @@ public class MapServiceImpl implements MapService {
     }
     dto.setMapPoint(MapPointMapper.toDTOMapper.apply(optionalOfMapPoint.get()));
 
-    for (RatingEntity rating : ratingRepository.findByMapPointId(id)) {
+    Page<RatingEntity> mapPointRatings = ratingRepository.findByMapPointId(id, pageable);
+    dto.setRatings(mapPointRatings.map(RatingMapper.toDTOMapper));
+
+    for (ReadRatingDTO rating : dto.getRatings()) {
       List<RatingCommentEntity> ratingComments = ratingCommentRepository.findByParentId(rating.getId());
 
       List<ReadRatingCommentDTO> ratingCommentDTOS = ratingComments.stream()
           .map(RatingCommentMapper.toDTOMapper)
           .collect(Collectors.toList());
 
-      ReadRatingDTO readRatingDTO = RatingMapper.toDTOMapper.apply(rating);
-      readRatingDTO.setSubComments(ratingCommentDTOS);
-      dto.getRatings().add(readRatingDTO);
+      rating.setSubComments(ratingCommentDTOS);
     }
     return dto;
   }
