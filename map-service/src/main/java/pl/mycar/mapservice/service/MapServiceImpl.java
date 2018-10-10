@@ -74,7 +74,7 @@ public class MapServiceImpl implements MapService {
 
   @Override
   public ReadPointDetailsDTO read(Long id, Pageable pageable) {
-    ReadPointDetailsDTO dto = new ReadPointDetailsDTO(null, null);
+    ReadPointDetailsDTO dto = new ReadPointDetailsDTO();
 
     Optional<MapPointEntity> optionalOfMapPoint = mapPointRepository.findById(id);
 
@@ -95,6 +95,18 @@ public class MapServiceImpl implements MapService {
 
       rating.setSubComments(ratingCommentDTOS);
     }
+
+    Long ratingCount = ratingRepository.countByMapPointId(id);
+
+    dto.setRatingCount(ratingCount);
+
+    Double ratingSum = ratingRepository.findByMapPointId(id).stream()
+        .map(RatingEntity::getRating)
+        .map(Double::valueOf)
+        .reduce(0.0, (acc, act) -> acc + act);
+
+    dto.setAverageRating(String.valueOf(ratingSum / ratingCount));
+
     return dto;
   }
 
