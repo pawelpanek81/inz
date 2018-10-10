@@ -13,5 +13,5 @@ public class ReadPointDetailsDTO {
   private ReadMapPointDTO mapPoint;
   private Page<ReadRatingDTO> ratings;
   private Long ratingCount;
-  private String averageRating;
+  private Double averageRating;
 }

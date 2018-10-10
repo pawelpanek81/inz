@@ -105,7 +105,7 @@ public class MapServiceImpl implements MapService {
         .map(Double::valueOf)
         .reduce(0.0, (acc, act) -> acc + act);
 
-    dto.setAverageRating(String.valueOf(ratingSum / ratingCount));
+    dto.setAverageRating(Math.round(ratingSum / ratingCount * 100) / 100D);
 
     return dto;
   }

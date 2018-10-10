@@ -19,7 +19,7 @@ values(2, '2018-10-09', 'admin', 'Niewielki asortyment dostępny od ręki. Nie b
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
 values(3, '2018-10-09', 'admin',
        'Cena sprzedanej mi żarówki H4 okazała się zbyt duża w porównaniu do konkurencji! Odradzam kupowania w tym sklepie.',
-       'Nie polecam', '1', 1);
+       'Nie polecam', '2', 1);
 
 -- Rating Comments
 insert into comments(id, added_at, added_by, comment, parent) values (1, '2018-10-10', 'admin', 'Dziękuję za opinie!', 1);
