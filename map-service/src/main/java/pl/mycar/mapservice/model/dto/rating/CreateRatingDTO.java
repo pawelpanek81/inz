@@ -15,16 +15,10 @@ public class CreateRatingDTO {
   @NotBlank
   private String comment;
 
-  private String rating;
+  private Integer rating;
 
   @AssertTrue
   public boolean checkRating() {
-    Double aDouble = Double.valueOf(rating);
-    String unifiedRating = rating.replace(",", ".");
-    String digitAfterPoint = unifiedRating.split(".")[1];
-
-    return aDouble.compareTo(1.0) >= 0 &&
-        aDouble.compareTo(5.0) <= 0 &&
-        digitAfterPoint.equals("0") || digitAfterPoint.equals("5");
+    return rating >=1 && rating <= 5;
   }
 }

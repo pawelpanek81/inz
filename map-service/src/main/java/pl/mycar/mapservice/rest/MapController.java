@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
@@ -51,7 +52,7 @@ class MapController {
   }
 
   @PostMapping(value = "/{id}/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> addRating(@PathVariable Long id, @Valid CreateRatingDTO dto, Principal principal) {
+  ResponseEntity<?> addRating(@PathVariable Long id, @Valid @RequestBody CreateRatingDTO dto, Principal principal) {
     ReadRatingDTO readRatingDTO;
     try {
       readRatingDTO = mapService.addRating(id, dto, principal);

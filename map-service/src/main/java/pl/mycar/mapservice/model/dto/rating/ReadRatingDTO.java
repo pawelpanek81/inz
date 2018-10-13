@@ -15,7 +15,7 @@ public class ReadRatingDTO {
   private String addedBy;
   private String header;
   private String comment;
-  private String rating;
+  private Integer rating;
   private LocalDateTime addedAt;
   private List<ReadRatingCommentDTO> subComments;
 }
