@@ -18,7 +18,7 @@ public class RatingEntity {
 
   @Id
   @SequenceGenerator(name = "rating_generator",
-      sequenceName = "rating_seq")
+      sequenceName = "rating_seq", initialValue = 5)
   @GeneratedValue(generator = "rating_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

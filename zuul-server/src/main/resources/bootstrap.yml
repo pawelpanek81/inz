@@ -36,6 +36,7 @@ zuul:
   routes:
     map:
       serviceId: map-service
+      sensitiveHeaders: Cookie,Set-Cookie
     account:
       serviceId: account-service
     auth:
