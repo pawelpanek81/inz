@@ -1,12 +1,10 @@
 package pl.mycar.mapservice.model.dto.rating;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 
-@NoArgsConstructor
 @Data
 public class CreateRatingDTO {
   @NotBlank
@@ -19,6 +17,6 @@ public class CreateRatingDTO {
 
   @AssertTrue
   public boolean checkRating() {
-    return rating >=1 && rating <= 5;
+    return rating >= 1 && rating <= 5;
   }
 }

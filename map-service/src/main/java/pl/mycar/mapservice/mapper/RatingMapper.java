@@ -14,11 +14,18 @@ public class RatingMapper {
       entity.getHeader(),
       entity.getComment(),
       entity.getRating(),
-      entity.getAddedAt(),
-      null
+      entity.getAddedAt()
   );
 
   public static RatingEntity mapToEntity(CreateRatingDTO dto) {
-    return new RatingEntity(null, null, dto.getHeader(), dto.getComment(), dto.getRating(), null, null);
+    return new RatingEntity(
+        null,
+        null,
+        dto.getHeader(),
+        dto.getComment(),
+        dto.getRating(),
+        null,
+        null
+    );
   }
 }

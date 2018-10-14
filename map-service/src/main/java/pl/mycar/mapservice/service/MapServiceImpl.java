@@ -6,14 +6,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
 import pl.mycar.mapservice.exception.PointTypeNotFoundException;
+import pl.mycar.mapservice.exception.RatingNotFoundException;
 import pl.mycar.mapservice.mapper.MapPointMapper;
 import pl.mycar.mapservice.mapper.RatingCommentMapper;
 import pl.mycar.mapservice.mapper.RatingMapper;
+import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
-import pl.mycar.mapservice.model.dto.rating.ReadRatingCommentDTO;
+import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
 import pl.mycar.mapservice.persistence.entity.MapPointEntity;
 import pl.mycar.mapservice.persistence.entity.PointTypeEntity;
@@ -50,7 +52,7 @@ public class MapServiceImpl implements MapService {
   }
 
   @Override
-  public ReadMapPointDTO create(CreateMapPointDTO dto, Principal principal) {
+  public ReadMapPointDTO createMapPoint(CreateMapPointDTO dto, Principal principal) {
     MapPointEntity entity = MapPointMapper.mapToEntity(dto);
     entity.setAddedBy(principal.getName());
     entity.setAddedAt(LocalDateTime.now());
@@ -65,7 +67,7 @@ public class MapServiceImpl implements MapService {
   }
 
   @Override
-  public List<ReadMapPointDTO> readAll() {
+  public List<ReadMapPointDTO> readAllMapPoints() {
     List<MapPointEntity> mapPointEntities = mapPointRepository.findAll();
     return mapPointEntities.stream()
         .map(MapPointMapper.toDTOMapper)
@@ -73,34 +75,21 @@ public class MapServiceImpl implements MapService {
   }
 
   @Override
-  public ReadPointDetailsDTO read(Long id, Pageable pageable) {
+  public ReadPointDetailsDTO readMapPoint(Long mapPointId, Pageable pageable) {
     ReadPointDetailsDTO dto = new ReadPointDetailsDTO();
 
-    Optional<MapPointEntity> optionalOfMapPoint = mapPointRepository.findById(id);
+    Optional<MapPointEntity> optionalOfMapPoint = mapPointRepository.findById(mapPointId);
 
     if (!optionalOfMapPoint.isPresent()) {
       throw new MapPointNotFoundException();
     }
     dto.setMapPoint(MapPointMapper.toDTOMapper.apply(optionalOfMapPoint.get()));
 
-    Page<RatingEntity> mapPointRatings = ratingRepository.findByMapPointId(id, pageable);
-    dto.setRatings(mapPointRatings.map(RatingMapper.toDTOMapper));
-
-    for (ReadRatingDTO rating : dto.getRatings()) {
-      List<RatingCommentEntity> ratingComments = ratingCommentRepository.findByParentId(rating.getId());
-
-      List<ReadRatingCommentDTO> ratingCommentDTOS = ratingComments.stream()
-          .map(RatingCommentMapper.toDTOMapper)
-          .collect(Collectors.toList());
-
-      rating.setSubComments(ratingCommentDTOS);
-    }
-
-    Long ratingCount = ratingRepository.countByMapPointId(id);
+    Long ratingCount = ratingRepository.countByMapPointId(mapPointId);
 
     dto.setRatingCount(ratingCount);
 
-    Double ratingSum = ratingRepository.findByMapPointId(id).stream()
+    Double ratingSum = ratingRepository.findByMapPointId(mapPointId).stream()
         .map(RatingEntity::getRating)
         .map(Double::valueOf)
         .reduce(0.0, (acc, act) -> acc + act);
@@ -108,6 +97,18 @@ public class MapServiceImpl implements MapService {
     dto.setAverageRating(Math.round(ratingSum / ratingCount * 100) / 100D);
 
     return dto;
+  }
+
+  @Override
+  public Page<ReadRatingDTO> readRatings(Long mapPointId, Pageable pageable) {
+    Optional<MapPointEntity> optionalOfMapPoint = mapPointRepository.findById(mapPointId);
+
+    if (!optionalOfMapPoint.isPresent()) {
+      throw new MapPointNotFoundException();
+    }
+
+    Page<RatingEntity> mapPointRatings = ratingRepository.findByMapPointId(mapPointId, pageable);
+    return  mapPointRatings.map(RatingMapper.toDTOMapper);
   }
 
   @Override
@@ -126,6 +127,49 @@ public class MapServiceImpl implements MapService {
     RatingEntity save = ratingRepository.save(ratingEntity);
 
     return RatingMapper.toDTOMapper.apply(save);
+  }
+
+  @Override
+  public Boolean mapPointExists(Long mapPointId) {
+    return mapPointRepository.existsById(mapPointId);
+  }
+
+  @Override
+  public Page<ReadCommentDTO> readComments(Long mapPointId, Long ratingId, Pageable pageable) {
+    if (!this.mapPointExists(mapPointId)) {
+      throw new MapPointNotFoundException();
+    }
+
+    Optional<RatingEntity> optionalOfRating = ratingRepository.findById(ratingId);
+
+    if (!optionalOfRating.isPresent()) {
+      throw new RatingNotFoundException();
+    }
+
+    return ratingCommentRepository.findByParentId(ratingId, pageable)
+        .map(RatingCommentMapper.toDTOMapper);
+  }
+
+  @Override
+  public ReadCommentDTO addComment(Long mapPointId, Long ratingId, CreateCommentDTO dto, Principal principal) {
+    if (!this.mapPointExists(mapPointId)) {
+      throw new MapPointNotFoundException();
+    }
+
+    Optional<RatingEntity> optionalOfRating = ratingRepository.findById(ratingId);
+
+    if (!optionalOfRating.isPresent()) {
+      throw new RatingNotFoundException();
+    }
+
+    RatingCommentEntity entity = RatingCommentMapper.mapToEntity(dto);
+    entity.setAddedAt(LocalDateTime.now());
+    entity.setAddedBy(principal.getName());
+    entity.setParent(optionalOfRating.get());
+
+    RatingCommentEntity save = ratingCommentRepository.save(entity);
+
+    return RatingCommentMapper.toDTOMapper.apply(save);
   }
 
 }

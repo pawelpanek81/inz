@@ -22,9 +22,22 @@ values(3, '2018-10-09', 'admin',
        'Nie polecam', 2, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(4, '2018-11-1', 'admin',
+values(4, '2018-12-1', 'admin',
        'Akumulatory dostępne w sklepie są nowej produkcji. U konkurencji można kupić zleżałe, kilkuletnie akumulatory.',
        'Polecam', 5, 1);
 
 -- Rating Comments
-insert into comments(id, added_at, added_by, comment, parent) values (1, '2018-10-10', 'admin', 'Dziękuję za opinie!', 1);
+insert into comments(id, added_at, added_by, comment, parent)
+values (1, '2018-10-10', 'admin', 'Dziękuję za opinie!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (2, '2018-10-11', 'admin', 'Również dziękuję!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (3, '2018-10-12', 'admin', 'Super, że podzieliłeś się z nami tą opinią. Nie skorzystam z usług tej firmy.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (4, '2018-10-13', 'admin', 'Myślę, że kłamiesz.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (5, '2018-10-13', 'admin', 'On nie okłamał, miałem dokładnie taką samą sytuację.', 4);

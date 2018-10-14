@@ -3,6 +3,7 @@ package pl.mycar.mapservice.model.dto.rating;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,5 +18,4 @@ public class ReadRatingDTO {
   private String comment;
   private Integer rating;
   private LocalDateTime addedAt;
-  private List<ReadRatingCommentDTO> subComments;
 }

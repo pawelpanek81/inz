@@ -1,12 +1,17 @@
 package pl.mycar.mapservice.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
+import pl.mycar.mapservice.exception.RatingNotFoundException;
+import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
+import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
@@ -29,14 +34,15 @@ class MapController {
   }
 
   @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> addNewPoint(@Valid @RequestBody CreateMapPointDTO dto, Principal principal) {
-    mapService.create(dto, principal);
-    return ResponseEntity.ok().build();
+  @Secured("ROLE_USER")
+  ResponseEntity<ReadMapPointDTO> addNewPoint(@Valid @RequestBody CreateMapPointDTO dto, Principal principal) {
+    ReadMapPointDTO mapPoint = mapService.createMapPoint(dto, principal);
+    return new ResponseEntity<>(mapPoint, HttpStatus.CREATED);
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<ReadMapPointDTO>> getAllPoints() {
-    List<ReadMapPointDTO> mapPointDTOS = mapService.readAll();
+    List<ReadMapPointDTO> mapPointDTOS = mapService.readAllMapPoints();
     return ResponseEntity.ok(mapPointDTOS);
   }
 
@@ -44,15 +50,27 @@ class MapController {
   ResponseEntity<ReadPointDetailsDTO> getPointDetails(@PathVariable Long id, Pageable pageable) {
     ReadPointDetailsDTO dto;
     try {
-      dto = mapService.read(id, pageable);
+      dto = mapService.readMapPoint(id, pageable);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(dto);
   }
 
+  @GetMapping(value = "/{id}/ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Page<ReadRatingDTO>> getRatingsPage(@PathVariable Long id, Pageable pageable) {
+    Page<ReadRatingDTO> readRatingDTOS;
+    try {
+      readRatingDTOS = mapService.readRatings(id, pageable);
+    } catch (MapPointNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(readRatingDTOS);
+  }
+
   @PostMapping(value = "/{id}/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<?> addRating(@PathVariable Long id, @Valid @RequestBody CreateRatingDTO dto, Principal principal) {
+  @Secured("ROLE_USER")
+  ResponseEntity<ReadRatingDTO> addRating(@PathVariable Long id, @Valid @RequestBody CreateRatingDTO dto, Principal principal) {
     ReadRatingDTO readRatingDTO;
     try {
       readRatingDTO = mapService.addRating(id, dto, principal);
@@ -61,6 +79,42 @@ class MapController {
     }
 
     return ResponseEntity.ok(readRatingDTO);
+  }
+
+  @GetMapping(value = "/{mapPointId}/ratings/{ratingId}/comments", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<Page<ReadCommentDTO>> readCommentsPage(
+      @PathVariable Long mapPointId,
+      @PathVariable Long ratingId,
+      Pageable pageable
+  ) {
+    Page<ReadCommentDTO> readRatingCommentDTOS;
+    try {
+      readRatingCommentDTOS = mapService.readComments(mapPointId, ratingId, pageable);
+
+    } catch (MapPointNotFoundException | RatingNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(readRatingCommentDTOS);
+  }
+
+  @PostMapping(value = "/{mapPointId}/ratings/{ratingId}/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @Secured("ROLE_USER")
+  ResponseEntity<ReadCommentDTO> addComment(
+      @PathVariable Long mapPointId,
+      @PathVariable Long ratingId,
+      @Valid @RequestBody CreateCommentDTO dto,
+      Principal principal) {
+
+    ReadCommentDTO readCommentDTO;
+
+    try {
+      readCommentDTO = mapService.addComment(mapPointId, ratingId, dto, principal);
+    } catch (MapPointNotFoundException | RatingNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(readCommentDTO);
   }
 
 }

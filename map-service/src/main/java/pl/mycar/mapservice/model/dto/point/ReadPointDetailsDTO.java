@@ -11,7 +11,6 @@ import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
 @AllArgsConstructor
 public class ReadPointDetailsDTO {
   private ReadMapPointDTO mapPoint;
-  private Page<ReadRatingDTO> ratings;
   private Long ratingCount;
   private Double averageRating;
 }

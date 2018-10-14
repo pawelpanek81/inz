@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class RatingCommentEntity {
   @Id
   @SequenceGenerator(name = "comment_generator",
-      sequenceName = "comment_seq")
+      sequenceName = "comment_seq", initialValue = 6)
   @GeneratedValue(generator = "comment_generator")
   private Long id;
 
