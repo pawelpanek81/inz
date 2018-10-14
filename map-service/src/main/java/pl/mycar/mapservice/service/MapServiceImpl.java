@@ -110,11 +110,7 @@ public class MapServiceImpl implements MapService {
   }
 
   @Override
-  public ReadRatingDTO readRatingByPrincipal(Long mapPointId, String principalName, Principal principal) {
-    if (!principalName.equals(principal.getName())) {
-      throw new UnauthorizedException();
-    }
-
+  public ReadRatingDTO readRatingByPrincipal(Long mapPointId, Principal principal) {
     Optional<RatingEntity> anyRating = ratingRepository.findByAddedByAndMapPointId(principal.getName(), mapPointId)
         .stream()
         .findAny();
@@ -127,7 +123,7 @@ public class MapServiceImpl implements MapService {
 
   @Override
   public ReadRatingDTO addRating(Long mapPointId, CreateRatingDTO dto, Principal principal) {
-    if (this.readRatingByPrincipal(mapPointId, principal.getName(), principal) != null) {
+    if (this.readRatingByPrincipal(mapPointId, principal) != null) {
       throw new UserAlreadyHasRatingException();
     }
 
@@ -152,7 +148,7 @@ public class MapServiceImpl implements MapService {
     RatingEntity ratingEntity = ratingRepository.findById(ratingId)
         .orElseThrow(RatingNotFoundException::new);
 
-    ReadRatingDTO readRatingDTO = this.readRatingByPrincipal(mapPointId, principal.getName(), principal);
+    ReadRatingDTO readRatingDTO = this.readRatingByPrincipal(mapPointId, principal);
     if (!readRatingDTO.getId().equals(ratingId)) {
       throw new UnauthorizedException();
     }

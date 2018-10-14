@@ -74,15 +74,9 @@ class MapController {
   @Secured("ROLE_USER")
   ResponseEntity<ReadRatingDTO> getRatingByPrincipal(
       @PathVariable Long id,
-      @RequestParam String username,
       Principal principal) {
 
-    ReadRatingDTO readRatingDTO;
-    try {
-      readRatingDTO = mapService.readRatingByPrincipal(id, username, principal);
-    } catch (UnauthorizedException e) {
-      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-    }
+    ReadRatingDTO readRatingDTO = mapService.readRatingByPrincipal(id, principal);
     return ResponseEntity.ok(readRatingDTO);
   }
 
