@@ -10,6 +10,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
 import pl.mycar.mapservice.exception.RatingNotFoundException;
+import pl.mycar.mapservice.exception.UnauthorizedException;
+import pl.mycar.mapservice.exception.UserAlreadyHasRatingException;
 import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
 import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
@@ -33,7 +35,7 @@ class MapController {
     this.mapService = mapService;
   }
 
-  @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @Secured("ROLE_USER")
   ResponseEntity<ReadMapPointDTO> addNewPoint(@Valid @RequestBody CreateMapPointDTO dto, Principal principal) {
     ReadMapPointDTO mapPoint = mapService.createMapPoint(dto, principal);
@@ -68,7 +70,27 @@ class MapController {
     return ResponseEntity.ok(readRatingDTOS);
   }
 
-  @PostMapping(value = "/{id}/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/{id}/my-rating", produces = MediaType.APPLICATION_JSON_VALUE)
+  @Secured("ROLE_USER")
+  ResponseEntity<ReadRatingDTO> getRatingByPrincipal(
+      @PathVariable Long id,
+      @RequestParam String username,
+      Principal principal) {
+
+    ReadRatingDTO readRatingDTO;
+    try {
+      readRatingDTO = mapService.readRatingByPrincipal(id, username, principal);
+    } catch (UnauthorizedException e) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    return ResponseEntity.ok(readRatingDTO);
+  }
+
+  @PostMapping(
+      value = "/{id}/ratings",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
   @Secured("ROLE_USER")
   ResponseEntity<ReadRatingDTO> addRating(@PathVariable Long id, @Valid @RequestBody CreateRatingDTO dto, Principal principal) {
     ReadRatingDTO readRatingDTO;
@@ -76,6 +98,33 @@ class MapController {
       readRatingDTO = mapService.addRating(id, dto, principal);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
+    } catch (UserAlreadyHasRatingException e) {
+      return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+    return ResponseEntity.ok(readRatingDTO);
+  }
+
+  @PutMapping(
+      value = "/{mapPointId}/ratings/{ratingId}",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @Secured("ROLE_USER")
+  ResponseEntity<ReadRatingDTO> updateRating(
+      @PathVariable Long mapPointId,
+      @PathVariable Long ratingId,
+      @RequestBody CreateRatingDTO createRatingDTO,
+      Principal principal
+  ) {
+    ReadRatingDTO readRatingDTO;
+
+    try {
+      readRatingDTO = mapService.updateRating(mapPointId, ratingId, createRatingDTO, principal);
+    } catch (RatingNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    } catch (UnauthorizedException e) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     return ResponseEntity.ok(readRatingDTO);
@@ -98,7 +147,11 @@ class MapController {
     return ResponseEntity.ok(readRatingCommentDTOS);
   }
 
-  @PostMapping(value = "/{mapPointId}/ratings/{ratingId}/comments", consumes = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping(
+      value = "/{mapPointId}/ratings/{ratingId}/comments",
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
   @Secured("ROLE_USER")
   ResponseEntity<ReadCommentDTO> addComment(
       @PathVariable Long mapPointId,

@@ -4,18 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.mycar.mapservice.exception.MapPointNotFoundException;
-import pl.mycar.mapservice.exception.PointTypeNotFoundException;
-import pl.mycar.mapservice.exception.RatingNotFoundException;
+import pl.mycar.mapservice.exception.*;
 import pl.mycar.mapservice.mapper.MapPointMapper;
 import pl.mycar.mapservice.mapper.RatingCommentMapper;
 import pl.mycar.mapservice.mapper.RatingMapper;
 import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
+import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
-import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
 import pl.mycar.mapservice.persistence.entity.MapPointEntity;
 import pl.mycar.mapservice.persistence.entity.PointTypeEntity;
@@ -108,11 +106,31 @@ public class MapServiceImpl implements MapService {
     }
 
     Page<RatingEntity> mapPointRatings = ratingRepository.findByMapPointId(mapPointId, pageable);
-    return  mapPointRatings.map(RatingMapper.toDTOMapper);
+    return mapPointRatings.map(RatingMapper.toDTOMapper);
+  }
+
+  @Override
+  public ReadRatingDTO readRatingByPrincipal(Long mapPointId, String principalName, Principal principal) {
+    if (!principalName.equals(principal.getName())) {
+      throw new UnauthorizedException();
+    }
+
+    Optional<RatingEntity> anyRating = ratingRepository.findByAddedByAndMapPointId(principal.getName(), mapPointId)
+        .stream()
+        .findAny();
+
+    if (anyRating.isPresent()) {
+      return RatingMapper.toDTOMapper.apply(anyRating.get());
+    }
+    return null;
   }
 
   @Override
   public ReadRatingDTO addRating(Long mapPointId, CreateRatingDTO dto, Principal principal) {
+    if (this.readRatingByPrincipal(mapPointId, principal.getName(), principal) != null) {
+      throw new UserAlreadyHasRatingException();
+    }
+
     Optional<MapPointEntity> optionalOfMapPointEntity = mapPointRepository.findById(mapPointId);
 
     if (!optionalOfMapPointEntity.isPresent()) {
@@ -126,6 +144,24 @@ public class MapServiceImpl implements MapService {
 
     RatingEntity save = ratingRepository.save(ratingEntity);
 
+    return RatingMapper.toDTOMapper.apply(save);
+  }
+
+  @Override
+  public ReadRatingDTO updateRating(Long mapPointId, Long ratingId, CreateRatingDTO dto, Principal principal) {
+    RatingEntity ratingEntity = ratingRepository.findById(ratingId)
+        .orElseThrow(RatingNotFoundException::new);
+
+    ReadRatingDTO readRatingDTO = this.readRatingByPrincipal(mapPointId, principal.getName(), principal);
+    if (!readRatingDTO.getId().equals(ratingId)) {
+      throw new UnauthorizedException();
+    }
+
+    ratingEntity.setRating(dto.getRating());
+    ratingEntity.setHeader(dto.getHeader());
+    ratingEntity.setComment(dto.getComment());
+
+    RatingEntity save = ratingRepository.save(ratingEntity);
     return RatingMapper.toDTOMapper.apply(save);
   }
 

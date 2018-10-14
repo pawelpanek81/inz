@@ -23,7 +23,11 @@ public interface MapService {
 
   Page<ReadRatingDTO> readRatings(Long mapPointId, Pageable pageable);
 
+  ReadRatingDTO readRatingByPrincipal(Long mapPointId, String principalName, Principal principal);
+
   ReadRatingDTO addRating(Long mapPointId, CreateRatingDTO dto, Principal principal);
+
+  ReadRatingDTO updateRating(Long mapPointId, Long ratingId, CreateRatingDTO dto, Principal principal);
 
   Boolean mapPointExists(Long mapPointId);
 

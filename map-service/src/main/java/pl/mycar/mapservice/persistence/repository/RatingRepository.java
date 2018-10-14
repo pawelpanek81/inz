@@ -13,4 +13,5 @@ public interface RatingRepository extends JpaRepository<RatingEntity, Long> {
   List<RatingEntity> findByMapPointId(Long id);
   Page<RatingEntity> findByMapPointId(Long id, Pageable pageable);
   Long countByMapPointId(Long id);
+  List<RatingEntity> findByAddedByAndMapPointId(String addedBy, Long id);
 }
