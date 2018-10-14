@@ -41,3 +41,33 @@ values (4, '2018-10-13', 'admin', 'Myślę, że kłamiesz.', 4);
 
 insert into comments(id, added_at, added_by, comment, parent)
 values (5, '2018-10-13', 'admin', 'On nie okłamał, miałem dokładnie taką samą sytuację.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (6, '2018-10-10', 'admin', 'Super, dzięki!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (7, '2018-10-11', 'admin', 'Dobrz, że są tacy ludzie jak Ty!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (8, '2018-10-12', 'admin', 'Myślę, że pracownicy mieli gorszy dzień.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (9, '2018-10-13', 'admin', 'Również byłem w tej firmie dwa razy, mam podobne odczucia.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (10, '2018-10-13', 'admin', 'Dodam jeszcze, że nie ma gdzie usiąść, czekając na auto.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (11, '2018-10-10', 'admin', 'Na swoje auto czekałem 2 tygodnie!!!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (12, '2018-10-11', 'admin', 'Dzięki za opinię.', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (13, '2018-10-12', 'admin', 'Naprawiałem u nich głowicę. Skasowali mnie na 3 tysiące złotych!', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (14, '2018-10-13', 'admin', 'Tanio to tam nie mają...', 4);
+
+insert into comments(id, added_at, added_by, comment, parent)
+values (15, '2018-10-13', 'admin', 'Szukają jeleni, żeby zarobić...', 4);
