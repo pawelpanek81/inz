@@ -72,11 +72,14 @@ class MapController {
 
   @GetMapping(value = "/{id}/my-rating", produces = MediaType.APPLICATION_JSON_VALUE)
   @Secured("ROLE_USER")
-  ResponseEntity<ReadRatingDTO> getRatingByPrincipal(
-      @PathVariable Long id,
-      Principal principal) {
+  ResponseEntity<ReadRatingDTO> getRatingByPrincipal(@PathVariable Long id, Principal principal) {
 
     ReadRatingDTO readRatingDTO = mapService.readRatingByPrincipal(id, principal);
+
+    if (readRatingDTO == null) {
+      return ResponseEntity.notFound().build();
+    }
+
     return ResponseEntity.ok(readRatingDTO);
   }
 
@@ -122,6 +125,21 @@ class MapController {
     }
 
     return ResponseEntity.ok(readRatingDTO);
+  }
+
+  @DeleteMapping(value = "/{mapPointId}/ratings/{ratingId}")
+  @Secured("ROLE_USER")
+  ResponseEntity<?> deleteRating(@PathVariable Long mapPointId, @PathVariable Long ratingId, Principal principal) {
+
+    try {
+      mapService.deleteRating(mapPointId, ratingId, principal);
+    } catch (RatingNotFoundException e) {
+      return ResponseEntity.notFound().build();
+    } catch (UnauthorizedException e) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    return ResponseEntity.ok().build();
   }
 
   @GetMapping(value = "/{mapPointId}/ratings/{ratingId}/comments", produces = MediaType.APPLICATION_JSON_VALUE)

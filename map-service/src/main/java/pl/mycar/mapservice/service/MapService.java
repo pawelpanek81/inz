@@ -34,4 +34,6 @@ public interface MapService {
   Page<ReadCommentDTO> readComments(Long mapPointId, Long ratingId, Pageable pageable);
 
   ReadCommentDTO addComment(Long mapPointId, Long ratingId, CreateCommentDTO dto, Principal principal);
+
+  ReadRatingDTO deleteRating(Long mapPointId, Long ratingId, Principal principal);
 }

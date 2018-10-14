@@ -204,4 +204,19 @@ public class MapServiceImpl implements MapService {
     return RatingCommentMapper.toDTOMapper.apply(save);
   }
 
+  @Override
+  public ReadRatingDTO deleteRating(Long mapPointId, Long ratingId, Principal principal) {
+    RatingEntity ratingEntity = ratingRepository.findById(ratingId)
+        .orElseThrow(RatingNotFoundException::new);
+
+    ReadRatingDTO readRatingDTO = this.readRatingByPrincipal(mapPointId, principal);
+    if (!readRatingDTO.getId().equals(ratingId)) {
+      throw new UnauthorizedException();
+    }
+
+    ratingRepository.delete(ratingEntity);
+
+    return readRatingDTO;
+  }
+
 }
