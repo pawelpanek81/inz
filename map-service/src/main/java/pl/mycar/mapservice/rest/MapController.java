@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.mycar.mapservice.exception.MapPointNotFoundException;
 import pl.mycar.mapservice.exception.RatingNotFoundException;
 import pl.mycar.mapservice.exception.UnauthorizedException;
-import pl.mycar.mapservice.exception.UserAlreadyHasRatingException;
+import pl.mycar.mapservice.exception.UserHasAlreadyRatedMapPointException;
 import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
 import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
@@ -95,7 +95,7 @@ class MapController {
       readRatingDTO = mapService.addRating(id, dto, principal);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
-    } catch (UserAlreadyHasRatingException e) {
+    } catch (UserHasAlreadyRatedMapPointException e) {
       return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
@@ -131,15 +131,16 @@ class MapController {
   @Secured("ROLE_USER")
   ResponseEntity<?> deleteRating(@PathVariable Long mapPointId, @PathVariable Long ratingId, Principal principal) {
 
+    ReadRatingDTO readRatingDTO;
     try {
-      mapService.deleteRating(mapPointId, ratingId, principal);
+      readRatingDTO = mapService.deleteRating(mapPointId, ratingId, principal);
     } catch (RatingNotFoundException e) {
       return ResponseEntity.notFound().build();
     } catch (UnauthorizedException e) {
       return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(readRatingDTO);
   }
 
   @GetMapping(value = "/{mapPointId}/ratings/{ratingId}/comments", produces = MediaType.APPLICATION_JSON_VALUE)

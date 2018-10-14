@@ -124,7 +124,7 @@ public class MapServiceImpl implements MapService {
   @Override
   public ReadRatingDTO addRating(Long mapPointId, CreateRatingDTO dto, Principal principal) {
     if (this.readRatingByPrincipal(mapPointId, principal) != null) {
-      throw new UserAlreadyHasRatingException();
+      throw new UserHasAlreadyRatedMapPointException();
     }
 
     Optional<MapPointEntity> optionalOfMapPointEntity = mapPointRepository.findById(mapPointId);

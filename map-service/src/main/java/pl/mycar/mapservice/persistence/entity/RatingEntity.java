@@ -9,7 +9,12 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ratings")
+@Table(
+    name = "ratings",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"added_by", "map_point_id"})
+    }
+)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
