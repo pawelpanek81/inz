@@ -13,16 +13,16 @@ values(1, '2018-10-09', 'admin', 'W sklepie kupowałem wycieraczki. Obsługa bar
        'Wszystko w porządku', 5, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(2, '2018-10-09', 'admin', 'Niewielki asortyment dostępny od ręki. Nie było matowego plaka do kokpitu.',
+values(2, '2018-10-09', 'Adam', 'Niewielki asortyment dostępny od ręki. Nie było matowego plaka do kokpitu.',
        'Ok', 3, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(3, '2018-10-09', 'admin',
+values(3, '2018-10-09', 'Paweł',
        'Cena sprzedanej mi żarówki H4 okazała się zbyt duża w porównaniu do konkurencji! Odradzam kupowania w tym sklepie.',
        'Nie polecam', 2, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(4, '2018-12-1', 'admin',
+values(4, '2018-12-1', 'Jacek',
        'Akumulatory dostępne w sklepie są nowej produkcji. U konkurencji można kupić zleżałe, kilkuletnie akumulatory.',
        'Polecam', 5, 1);
 
