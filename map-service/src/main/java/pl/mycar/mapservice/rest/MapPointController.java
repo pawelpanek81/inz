@@ -19,8 +19,7 @@ import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
-import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
-import pl.mycar.mapservice.service.MapService;
+import pl.mycar.mapservice.service.MapPointService;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -28,24 +27,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("map-points")
-class MapController {
-  private MapService mapService;
+class MapPointController {
+  private MapPointService mapPointService;
 
   @Autowired
-  public MapController(MapService mapService) {
-    this.mapService = mapService;
+  public MapPointController(MapPointService mapPointService) {
+    this.mapPointService = mapPointService;
   }
 
   @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
   @Secured("ROLE_USER")
   ResponseEntity<ReadMapPointDTO> addNewPoint(@Valid @RequestBody CreateMapPointDTO dto, Principal principal) {
-    ReadMapPointDTO mapPoint = mapService.createMapPoint(dto, principal);
+    ReadMapPointDTO mapPoint = mapPointService.createMapPoint(dto, principal);
     return new ResponseEntity<>(mapPoint, HttpStatus.CREATED);
   }
 
   @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
   ResponseEntity<List<ReadMapPointDTO>> getAllPoints() {
-    List<ReadMapPointDTO> mapPointDTOS = mapService.readAllMapPoints();
+    List<ReadMapPointDTO> mapPointDTOS = mapPointService.readAllMapPoints();
     return ResponseEntity.ok(mapPointDTOS);
   }
 
@@ -53,7 +52,7 @@ class MapController {
   ResponseEntity<ReadPointDetailsDTO> getPointDetails(@PathVariable Long id, Pageable pageable) {
     ReadPointDetailsDTO dto;
     try {
-      dto = mapService.readMapPoint(id, pageable);
+      dto = mapPointService.readMapPoint(id, pageable);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
     }
@@ -64,7 +63,7 @@ class MapController {
   ResponseEntity<Page<ReadRatingDTO>> getRatingsPage(@PathVariable Long id, Pageable pageable) {
     Page<ReadRatingDTO> readRatingDTOS;
     try {
-      readRatingDTOS = mapService.readRatings(id, pageable);
+      readRatingDTOS = mapPointService.readRatings(id, pageable);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
     }
@@ -75,7 +74,7 @@ class MapController {
   @Secured("ROLE_USER")
   ResponseEntity<ReadRatingDTO> getRatingByPrincipal(@PathVariable Long id, Principal principal) {
 
-    ReadRatingDTO readRatingDTO = mapService.readRatingByPrincipal(id, principal);
+    ReadRatingDTO readRatingDTO = mapPointService.readRatingByPrincipal(id, principal);
 
     if (readRatingDTO == null) {
       return ResponseEntity.notFound().build();
@@ -93,7 +92,7 @@ class MapController {
   ResponseEntity<ReadRatingDTO> addRating(@PathVariable Long id, @Valid @RequestBody CreateRatingDTO dto, Principal principal) {
     ReadRatingDTO readRatingDTO;
     try {
-      readRatingDTO = mapService.addRating(id, dto, principal);
+      readRatingDTO = mapPointService.addRating(id, dto, principal);
     } catch (MapPointNotFoundException e) {
       return ResponseEntity.notFound().build();
     } catch (UserHasAlreadyRatedMapPointException e) {
@@ -118,7 +117,7 @@ class MapController {
     ReadRatingDTO readRatingDTO;
 
     try {
-      readRatingDTO = mapService.updateRating(mapPointId, ratingId, createRatingDTO, principal);
+      readRatingDTO = mapPointService.updateRating(mapPointId, ratingId, createRatingDTO, principal);
     } catch (RatingNotFoundException e) {
       return ResponseEntity.notFound().build();
     } catch (UnauthorizedException e) {
@@ -134,7 +133,7 @@ class MapController {
 
     ReadRatingDTO readRatingDTO;
     try {
-      readRatingDTO = mapService.deleteRating(mapPointId, ratingId, principal);
+      readRatingDTO = mapPointService.deleteRating(mapPointId, ratingId, principal);
     } catch (RatingNotFoundException e) {
       return ResponseEntity.notFound().build();
     } catch (UnauthorizedException e) {
@@ -152,7 +151,7 @@ class MapController {
   ) {
     Page<ReadCommentDTO> readRatingCommentDTOS;
     try {
-      readRatingCommentDTOS = mapService.readComments(mapPointId, ratingId, pageable);
+      readRatingCommentDTOS = mapPointService.readComments(mapPointId, ratingId, pageable);
 
     } catch (MapPointNotFoundException | RatingNotFoundException e) {
       return ResponseEntity.notFound().build();
@@ -176,17 +175,11 @@ class MapController {
     ReadCommentDTO readCommentDTO;
 
     try {
-      readCommentDTO = mapService.addComment(mapPointId, ratingId, dto, principal);
+      readCommentDTO = mapPointService.addComment(mapPointId, ratingId, dto, principal);
     } catch (MapPointNotFoundException | RatingNotFoundException e) {
       return ResponseEntity.notFound().build();
     }
 
     return ResponseEntity.ok(readCommentDTO);
-  }
-
-  @GetMapping(value = "/map-point-types", produces = MediaType.APPLICATION_JSON_VALUE)
-  ResponseEntity<List<ReadPointTypeDTO>> readMapPointTypes() {
-    List<ReadPointTypeDTO> pointTypeDTOS = mapService.readAllPointTypes();
-    return ResponseEntity.ok(pointTypeDTOS);
   }
 }

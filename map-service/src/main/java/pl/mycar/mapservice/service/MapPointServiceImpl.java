@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.mycar.mapservice.exception.*;
 import pl.mycar.mapservice.mapper.MapPointMapper;
-import pl.mycar.mapservice.mapper.PointTypeMapper;
 import pl.mycar.mapservice.mapper.RatingCommentMapper;
 import pl.mycar.mapservice.mapper.RatingMapper;
 import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
@@ -16,7 +15,6 @@ import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
-import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
 import pl.mycar.mapservice.persistence.entity.MapPointEntity;
 import pl.mycar.mapservice.persistence.entity.PointTypeEntity;
 import pl.mycar.mapservice.persistence.entity.RatingCommentEntity;
@@ -33,17 +31,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class MapServiceImpl implements MapService {
+public class MapPointServiceImpl implements MapPointService {
   private MapPointRepository mapPointRepository;
   private PointTypeRepository pointTypeRepository;
   private RatingRepository ratingRepository;
   private RatingCommentRepository ratingCommentRepository;
 
   @Autowired
-  public MapServiceImpl(MapPointRepository mapPointRepository,
-                        PointTypeRepository pointTypeRepository,
-                        RatingRepository ratingRepository,
-                        RatingCommentRepository ratingCommentRepository) {
+  public MapPointServiceImpl(MapPointRepository mapPointRepository,
+                             PointTypeRepository pointTypeRepository,
+                             RatingRepository ratingRepository,
+                             RatingCommentRepository ratingCommentRepository) {
 
     this.mapPointRepository = mapPointRepository;
     this.pointTypeRepository = pointTypeRepository;
@@ -219,13 +217,6 @@ public class MapServiceImpl implements MapService {
     ratingRepository.delete(ratingEntity);
 
     return readRatingDTO;
-  }
-
-  @Override
-  public List<ReadPointTypeDTO> readAllPointTypes() {
-    return pointTypeRepository.findAll().stream()
-        .map(PointTypeMapper.toDTOMapper)
-        .collect(Collectors.toList());
   }
 
 }

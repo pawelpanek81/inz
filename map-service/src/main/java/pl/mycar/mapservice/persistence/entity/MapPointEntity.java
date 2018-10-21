@@ -18,7 +18,7 @@ public class MapPointEntity {
 
   @Id
   @SequenceGenerator(name = "map_point_generator",
-      sequenceName = "map_point_seq")
+      sequenceName = "map_point_seq", initialValue = 2)
   @GeneratedValue(generator = "map_point_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

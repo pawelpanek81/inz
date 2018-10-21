@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class PointTypeEntity {
   @Id
   @SequenceGenerator(name = "point_type_generator",
-      sequenceName = "point_type_seq")
+      sequenceName = "point_type_seq", initialValue = 3)
   @GeneratedValue(generator = "point_type_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

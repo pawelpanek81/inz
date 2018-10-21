@@ -3,18 +3,17 @@ package pl.mycar.mapservice.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import pl.mycar.mapservice.model.dto.comment.CreateCommentDTO;
+import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.point.CreateMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
-import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
-import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
 
 import java.security.Principal;
 import java.util.List;
 
-public interface MapService {
+public interface MapPointService {
 
   ReadMapPointDTO createMapPoint(CreateMapPointDTO dto, Principal principal);
 
@@ -38,5 +37,4 @@ public interface MapService {
 
   ReadRatingDTO deleteRating(Long mapPointId, Long ratingId, Principal principal);
 
-  List<ReadPointTypeDTO> readAllPointTypes();
 }
