@@ -37,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
   @Override
   public List<ReadNotificationDTO> readFirst5UnreadNotificationsByPrincipal(Principal principal) {
     String username = principal.getName();
-    List<NotificationEntity> top5ByUsernameAndRead = notificationRepository.findTop5ByUsernameAndRead(username, true);
+    List<NotificationEntity> top5ByUsernameAndRead = notificationRepository.findTop5ByUsernameAndRead(username, false);
 
     List<ReadNotificationDTO> notificationDTOS = top5ByUsernameAndRead.stream()
         .map(NotificationMapper.toDTOMapper)
