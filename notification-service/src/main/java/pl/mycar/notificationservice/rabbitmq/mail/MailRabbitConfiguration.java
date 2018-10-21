@@ -34,12 +34,12 @@ public class MailRabbitConfiguration {
 
   @Bean
   SimpleMessageListenerContainer mailContainer(ConnectionFactory connectionFactory,
-                                               MessageListenerAdapter listenerAdapter) {
-    return RabbitCommons.addListenerToQueue(connectionFactory, listenerAdapter, mailQueueName);
+                                               MessageListenerAdapter mailListenerAdapter) {
+    return RabbitCommons.addListenerToQueue(connectionFactory, mailListenerAdapter, mailQueueName);
   }
 
   @Bean
-  MessageListenerAdapter listenerAdapter(MailMessageReceiver mailMessageReceiver) {
+  MessageListenerAdapter mailListenerAdapter(MailMessageReceiver mailMessageReceiver) {
     return new MessageListenerAdapter(mailMessageReceiver, "receiveMessage");
   }
 }

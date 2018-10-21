@@ -33,15 +33,15 @@ public class PushRabbitConfiguration {
   }
 
   @Bean
-  SimpleMessageListenerContainer pushContainer(ConnectionFactory connectionFactory,
-                                               MessageListenerAdapter listenerAdapter) {
-    return RabbitCommons.addListenerToQueue(connectionFactory, listenerAdapter, mailQueueName);
+    SimpleMessageListenerContainer pushContainer(ConnectionFactory connectionFactory,
+                                               MessageListenerAdapter pushListenerAdapter) {
+    return RabbitCommons.addListenerToQueue(connectionFactory, pushListenerAdapter, mailQueueName);
   }
 
 
 
   @Bean
-  MessageListenerAdapter listenerAdapter(PushMessageReceiver pushMessageReceiver) {
+  MessageListenerAdapter pushListenerAdapter(PushMessageReceiver pushMessageReceiver) {
     return new MessageListenerAdapter(pushMessageReceiver, "receiveMessage");
   }
 }
