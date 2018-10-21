@@ -21,6 +21,8 @@
     <module>account-service</module>
     <module>jwt-filter</module>
     <module>jwt-config</module>
+    <module>notification-service</module>
+    <module>technical-examination-service</module>
   </modules>
 
   <parent>

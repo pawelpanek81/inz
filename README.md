@@ -41,6 +41,12 @@ Then compile modules, and start in order:
 1. zuul-server
 1. others
 
+#### Execute independent of local or docker environment
+start rabbitmq in docker:
+```cmd
+docker-compose up rabbitmq
+```
+
 ## Running in docker:
 Fire command:
 ```cmd
