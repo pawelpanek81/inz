@@ -39,7 +39,7 @@ public class MapPointEntity {
   private String city;
 
   @Column(name = "zip_code", nullable = false)
-  private String zipCode;;
+  private String zipCode;
 
   @Column(name = "www")
   private String www;

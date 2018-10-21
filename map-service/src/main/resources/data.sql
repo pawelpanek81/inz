@@ -1,5 +1,10 @@
 -- Point Types
-insert into point_types(id, description, icon_file, type) values (1, 'Sklep motoryzacyjny', '', 'automotive_shop');
+insert into point_types(id, description, icon_file, type)
+values (1, 'Sklep motoryzacyjny', 'static/markers/blue_MarkerA.png', 'automotive_shop');
+
+insert into point_types(id, description, icon_file, type)
+values (2, 'Warsztat samochodowy', 'static/markers/darkgreen_MarkerA.png', 'car_service');
+
 
 -- Map Points
 insert into map_points(id, added_at, added_by, address, approved, city, company_name, info, latitude, longitude, phone,

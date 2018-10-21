@@ -9,6 +9,7 @@ import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
 import pl.mycar.mapservice.model.dto.comment.ReadCommentDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
+import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
 
 import java.security.Principal;
 import java.util.List;
@@ -36,4 +37,6 @@ public interface MapService {
   ReadCommentDTO addComment(Long mapPointId, Long ratingId, CreateCommentDTO dto, Principal principal);
 
   ReadRatingDTO deleteRating(Long mapPointId, Long ratingId, Principal principal);
+
+  List<ReadPointTypeDTO> readAllPointTypes();
 }

@@ -19,6 +19,7 @@ import pl.mycar.mapservice.model.dto.point.ReadMapPointDTO;
 import pl.mycar.mapservice.model.dto.point.ReadPointDetailsDTO;
 import pl.mycar.mapservice.model.dto.rating.CreateRatingDTO;
 import pl.mycar.mapservice.model.dto.rating.ReadRatingDTO;
+import pl.mycar.mapservice.model.dto.type.ReadPointTypeDTO;
 import pl.mycar.mapservice.service.MapService;
 
 import javax.validation.Valid;
@@ -183,4 +184,9 @@ class MapController {
     return ResponseEntity.ok(readCommentDTO);
   }
 
+  @GetMapping(value = "/map-point-types", produces = MediaType.APPLICATION_JSON_VALUE)
+  ResponseEntity<List<ReadPointTypeDTO>> readMapPointTypes() {
+    List<ReadPointTypeDTO> pointTypeDTOS = mapService.readAllPointTypes();
+    return ResponseEntity.ok(pointTypeDTOS);
+  }
 }
