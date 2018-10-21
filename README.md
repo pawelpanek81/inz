@@ -34,22 +34,33 @@ append microservices domain names to ip:
 127.0.0.1 auth-server
 127.0.0.1 zuul-server
 127.0.0.1 account-service
-...
-127.0.0.1 db-postgres-account-service
-127.0.0.1 db-postgres-map-service
-...
+127.0.0.1 map-service
+127.0.0.1 notification-service
+127.0.0.1 technical-examination-service
+127.0.0.1 car-service
+# uncomment databases if running locally, not in docker
+# 127.0.0.1 db-postgres-account-service
+# 127.0.0.1 db-postgres-map-service
+# 127.0.0.1 db-postgres-notification-service
+# 127.0.0.1 db-postgres-technical-examination-service
+# 127.0.0.1 db-postgres-car-service
 ```
 append database domain names to ip:
 ```
 192.168.99.100 db-postgres-account-service
 192.168.99.100 db-postgres-map-service
-...
+192.168.99.100 db-postgres-notification-service
+192.168.99.100 db-postgres-technical-examination-service
+192.168.99.100 db-postgres-car-service
 ```
 
 start databases in docker:
 ```cmd
 docker-compose run -p 5000:5432 db-postgres-account-service
 docker-compose run -p 5001:5432 db-postgres-map-service
+docker-compose run -p 5002:5432 db-postgres-notification-service
+docker-compose run -p 5003:5432 db-postgres-technical-examination-service
+docker-compose run -p 5004:5432 db-postgres-car-service
 ```
 
 #### Instructions

@@ -27,7 +27,7 @@ values(3, '2018-10-09', 'Paweł',
        'Nie polecam', 2, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(4, '2018-12-1', 'admin',
+values(4, '2018-12-1', 'pawel96',
        'Akumulatory dostępne w sklepie są nowej produkcji. U konkurencji można kupić zleżałe, kilkuletnie akumulatory.',
        'Polecam', 5, 1);
 

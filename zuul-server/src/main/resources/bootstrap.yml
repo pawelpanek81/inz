@@ -44,3 +44,6 @@ zuul:
       service-id: auth-server
       strip-prefix: true
       sensitive-headers: Cookie,Set-Cookie
+    notification:
+      service-id: notification-service
+      sensitiveHeaders: Cookie,Set-Cookie
