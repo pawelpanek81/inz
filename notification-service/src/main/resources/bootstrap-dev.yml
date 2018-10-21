@@ -1,0 +1,11 @@
+spring:
+  rabbitmq:
+      host: 192.168.99.100
+  cloud:
+    config:
+      uri: http://127.0.0.1:9090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:9091/eureka

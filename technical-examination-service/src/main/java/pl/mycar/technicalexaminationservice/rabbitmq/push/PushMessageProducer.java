@@ -1,20 +1,20 @@
-package pl.mycar.technicalexaminationservice.rabbitmq;
+package pl.mycar.technicalexaminationservice.rabbitmq.push;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MailMessageProducer {
-  private static final String mailExchangeName = "mail-exchange";
+public class PushMessageProducer {
+  private static final String mailExchangeName = "push-exchange";
   private final RabbitTemplate rabbitTemplate;
 
   @Autowired
-  public MailMessageProducer(RabbitTemplate rabbitTemplate) {
+  public PushMessageProducer(RabbitTemplate rabbitTemplate) {
     this.rabbitTemplate = rabbitTemplate;
   }
 
   public void sendMessage(String message) {
-    rabbitTemplate.convertAndSend(mailExchangeName, "aqm.mail", message);
+    rabbitTemplate.convertAndSend(mailExchangeName, "aqm.push", message);
   }
 }

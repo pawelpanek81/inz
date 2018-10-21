@@ -1,4 +1,4 @@
-package pl.mycar.notificationservice.rabbitmq;
+package pl.mycar.notificationservice.rabbitmq.mail;
 
 import org.springframework.stereotype.Component;
 

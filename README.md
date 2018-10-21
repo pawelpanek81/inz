@@ -1,6 +1,22 @@
 # Web application supporting car servicing
 
+You can run this application in either local or docker environment.
+This document contains instructions how to run application in local and docker environment.
+Running in local environment can be done either at the "default" or "dev" profile in Spring.
+
+a) Running in dev profile sets the Config and Eureka server to 127.0.0.1.
+It also runs application with H2 embedded database, so you don't have to run external PostgreSQL servers.
+
+b) Running in default profile has similar settings as in docker, so it is good to test before deploying on docker. To run in default profile you have to run databases in docker and edit hosts file to provide proper dns.
+
+
 ## Running locally:
+
+#### Execute regardless of the profile
+start rabbitmq in docker:
+```cmd
+docker-compose up rabbitmq
+```
 
 #### Dev profile:
 Set dev profile in VM options for each microservice:
@@ -33,6 +49,7 @@ docker-compose run -p 5000:5432 db-postgres-account-service
 docker-compose run -p 5001:5432 db-postgres-map-service
 ```
 
+#### Instructions
 Firstly Maven clean and install jwt-config/pom.xml,
 
 Then compile modules, and start in order:
@@ -41,11 +58,6 @@ Then compile modules, and start in order:
 1. zuul-server
 1. others
 
-#### Execute independent of local or docker environment
-start rabbitmq in docker:
-```cmd
-docker-compose up rabbitmq
-```
 
 ## Running in docker:
 Fire command:
@@ -69,9 +81,18 @@ docker-compose down
 | Auth Server (JWT gen.) | 9093 | auth-server |
 | Map Service | 8082 | map-service |
 | Account Service | 8083 | account-service |
+| Notification Service | 8084 | notification-service |
+| Technical Examination Service | 8085 | technical-examination-service |
+| Car Service | 8086 | car-service |
 
 ### Databases:
 | Database name | Docker host | Docker-Compose Exposed Port | User | Password | Docker service name |
 | --- | --- | --- | --- | --- | --- |
 | account-service-db | 5432 | 5000 | account-db-user | toor | db-postgres-account-service |
 | map-service-db | 5432 | 5001 | map-db-user | toor | db-postgres-map-service |
+
+### RabbitMQ:
+| Docker service name | Docker Port | Docker-Compose Exposed Port | 
+| --- | --- | --- | 
+| rabbitmq | 5672 | 5672 | 
+| | 15672 | 15672 | 

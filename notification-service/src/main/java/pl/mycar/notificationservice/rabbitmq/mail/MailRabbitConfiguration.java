@@ -1,4 +1,4 @@
-package pl.mycar.notificationservice.rabbitmq;
+package pl.mycar.notificationservice.rabbitmq.mail;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -9,9 +9,10 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.mycar.notificationservice.rabbitmq.RabbitCommons;
 
 @Configuration
-public class RabbitConfiguration {
+public class MailRabbitConfiguration {
 
   private static final String mailExchangeName = "mail-exchange";
   private static final String mailQueueName = "mail-queue";
@@ -32,13 +33,9 @@ public class RabbitConfiguration {
   }
 
   @Bean
-  SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                           MessageListenerAdapter listenerAdapter) {
-    SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-    container.setConnectionFactory(connectionFactory);
-    container.setQueueNames(mailQueueName);
-    container.setMessageListener(listenerAdapter);
-    return container;
+  SimpleMessageListenerContainer mailContainer(ConnectionFactory connectionFactory,
+                                               MessageListenerAdapter listenerAdapter) {
+    return RabbitCommons.addListenerToQueue(connectionFactory, listenerAdapter, mailQueueName);
   }
 
   @Bean
