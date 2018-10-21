@@ -39,6 +39,7 @@ public class MapPointMapper {
         .latitude(dto.getLatitude())
         .longitude(dto.getLongitude())
         .pointType(null)
+        .approved(false)
         .build();
   }
 
