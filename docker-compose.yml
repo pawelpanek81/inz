@@ -88,6 +88,48 @@ services:
       - "5672:5672"
       - "15672:15672"
 
+  db-postgres-notification-service:
+    container_name: postgres-notification
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=notification-db-user
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=notification-service-db
+    volumes:
+      - postgres-notification-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5002:5432"
+
+  db-postgres-technical-examination-service:
+    container_name: postgres-technical-examination
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=technical-examination-db-user
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=technical-examination-service-db
+    volumes:
+      - postgres-technical-examination-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5003:5432"
+
+  db-postgres-car-service:
+    container_name: postgres-car
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=car-db-user
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=car-service-db
+    volumes:
+      - postgres-car-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5004:5432"
+
 volumes:
   postgres-account-data:
   postgres-map-data:
+  postgres-notification-data:
+  postgres-technical-examination-data:
+  postgres-car-data:

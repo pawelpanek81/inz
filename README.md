@@ -34,13 +34,16 @@ append microservices domain names to ip:
 127.0.0.1 auth-server
 127.0.0.1 zuul-server
 127.0.0.1 account-service
+...
 127.0.0.1 db-postgres-account-service
 127.0.0.1 db-postgres-map-service
+...
 ```
 append database domain names to ip:
 ```
 192.168.99.100 db-postgres-account-service
 192.168.99.100 db-postgres-map-service
+...
 ```
 
 start databases in docker:
@@ -90,6 +93,9 @@ docker-compose down
 | --- | --- | --- | --- | --- | --- |
 | account-service-db | 5432 | 5000 | account-db-user | toor | db-postgres-account-service |
 | map-service-db | 5432 | 5001 | map-db-user | toor | db-postgres-map-service |
+| notification-service-db | 5432 | 5002 | notification-db-user | toor | db-postgres-notification-service |
+| technical-examination-service-db | 5432 | 5003 | technical-examination-db-user | toor | db-postgres-technical-examination-service |
+| car-service-db | 5432 | 5004 | car-db-user | toor | db-postgres-car-service |
 
 ### RabbitMQ:
 | Docker service name | Docker Port | Docker-Compose Exposed Port | 
