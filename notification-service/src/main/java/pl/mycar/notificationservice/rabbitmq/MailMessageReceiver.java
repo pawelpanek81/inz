@@ -1,12 +1,13 @@
-package pl.mycar.notificationservice;
+package pl.mycar.notificationservice.rabbitmq;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class Receiver {
+public class MailMessageReceiver {
 
   private void receiveMessage(String message) {
     System.out.println("Received <" + message + ">");
+    System.out.println("Sending mail...");
   }
 
 }
