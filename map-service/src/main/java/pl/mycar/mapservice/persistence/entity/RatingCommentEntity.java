@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,6 +28,7 @@ public class RatingCommentEntity {
 
   @ManyToOne
   @JoinColumn(name = "parent")
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private RatingEntity parent;
 
   @Column(name = "comment", nullable = false)
