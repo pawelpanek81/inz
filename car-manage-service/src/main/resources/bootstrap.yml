@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: car-service
+    name: car-manage-service
   cloud:
     config:
       uri: http://config-server:9090

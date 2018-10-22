@@ -19,6 +19,7 @@ public class SwaggerDocumentation implements SwaggerResourcesProvider {
     List<SwaggerResource> resources = new ArrayList<>();
     resources.add(swaggerResource("map-service", "/api/map/v2/api-docs", "2.0"));
     resources.add(swaggerResource("account-service", "/api/account/v2/api-docs", "2.0"));
+    resources.add(swaggerResource("car-manage-service", "/api/car/v2/api-docs", "2.0"));
     return resources;
   }
 

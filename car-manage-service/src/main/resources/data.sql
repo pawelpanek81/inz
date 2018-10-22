@@ -1,0 +1,2 @@
+insert into cars (id, vin, brand, model, fuel_type, engine_capacity, engine_power_hp, owner, production_year)
+  values(1, 'KNADE123666071240', 'Daimler-Benz', '190E', 'UNLEADED', 2000, 118, 'pawel96', 1988);

@@ -16,9 +16,9 @@ import javax.persistence.*;
 public class AccountEntity {
 
   @Id
-  @SequenceGenerator(name = "accounts_generator",
-      sequenceName = "accounts_id_seq", initialValue = 2)
-  @GeneratedValue(generator = "accounts_generator")
+  @SequenceGenerator(name = "account_generator",
+      sequenceName = "account_id_seq", initialValue = 2)
+  @GeneratedValue(generator = "account_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 

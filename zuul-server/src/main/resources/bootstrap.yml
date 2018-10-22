@@ -47,3 +47,6 @@ zuul:
     notification:
       service-id: notification-service
       sensitiveHeaders: Cookie,Set-Cookie
+    car:
+      service-id: car-manage-service
+      sensitiveHeaders: Cookie,Set-Cookie
