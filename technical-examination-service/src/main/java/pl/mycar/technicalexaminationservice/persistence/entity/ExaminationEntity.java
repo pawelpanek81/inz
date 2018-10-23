@@ -24,6 +24,9 @@ public class ExaminationEntity {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
+  @Column(name = "username")
+  private String username;
+
   @Column(name = "examination_date", nullable = false)
   private LocalDate examinationDate;
 

@@ -22,7 +22,8 @@ public class ExaminationDocumentEntity {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "examination_id", nullable = false)
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "examination_id", nullable = false)
   private ExaminationEntity examination;
 
   @Column(name = "file_name", nullable = false)
