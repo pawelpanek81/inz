@@ -24,3 +24,7 @@ management:
 feign:
   hystrix:
     enabled: true
+  client:
+    config:
+      default:
+        decode404: true

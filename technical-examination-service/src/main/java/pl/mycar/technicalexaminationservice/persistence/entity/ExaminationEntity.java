@@ -19,7 +19,7 @@ public class ExaminationEntity {
 
   @Id
   @SequenceGenerator(name = "examination_generator",
-      sequenceName = "examination_id_seq", initialValue = 1)
+      sequenceName = "examination_id_seq", initialValue = 2)
   @GeneratedValue(generator = "examination_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

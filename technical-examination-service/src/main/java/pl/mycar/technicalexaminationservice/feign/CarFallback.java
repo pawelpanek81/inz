@@ -8,6 +8,6 @@ public class CarFallback implements CarClient {
 
   @Override
   public ResponseEntity<ReadCarDTO> getCar(Long id) {
-    return ResponseEntity.ok(new ReadCarDTO(1L, "Twoje", "auto"));
+    return ResponseEntity.ok(new ReadCarDTO(null, "Twoje", "auto"));
   }
 }

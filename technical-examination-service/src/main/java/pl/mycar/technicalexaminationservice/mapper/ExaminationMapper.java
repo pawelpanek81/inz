@@ -16,7 +16,7 @@ public class ExaminationMapper {
 
   public static ExaminationEntity mapToEntity(CreateExaminationDTO dto) {
     return new ExaminationEntity(
-        dto.getId(),
+        null,
         null,
         dto.getExaminationDate(),
         dto.getCarId(),

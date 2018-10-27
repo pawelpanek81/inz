@@ -1,11 +1,12 @@
 package pl.mycar.technicalexaminationservice.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.mycar.technicalexaminationservice.exception.CarNotFoundException;
+import pl.mycar.technicalexaminationservice.model.dto.CreateExaminationDTO;
 import pl.mycar.technicalexaminationservice.model.dto.ReadExaminationDTO;
 import pl.mycar.technicalexaminationservice.service.ExaminationService;
 
@@ -27,6 +28,17 @@ public class ExaminationController {
   ResponseEntity<List<ReadExaminationDTO>> getAllExaminations(Principal principal) {
     List<ReadExaminationDTO> examinationDTOS = examinationService.readAllExaminations(principal);
     return ResponseEntity.ok(examinationDTOS);
+  }
+
+  @PostMapping("")
+  @Secured("ROLE_USER")
+  ResponseEntity<?> addExamination(@RequestBody CreateExaminationDTO dto, Principal principal) {
+    try {
+      examinationService.createExamination(dto, principal);
+    } catch (CarNotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    return ResponseEntity.ok().build();
   }
 
 }
