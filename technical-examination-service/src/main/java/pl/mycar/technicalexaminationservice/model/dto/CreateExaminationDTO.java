@@ -3,6 +3,7 @@ package pl.mycar.technicalexaminationservice.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -11,10 +12,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateExaminationDTO {
-  @NotNull
+//  @NotNull
+  @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
   private LocalDate examinationDate;
 
-  @NotNull
+//  @NotNull
   private Long carId;
 
   private String description;

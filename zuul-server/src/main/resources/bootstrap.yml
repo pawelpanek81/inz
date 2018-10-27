@@ -50,3 +50,6 @@ zuul:
     car:
       service-id: car-manage-service
       sensitiveHeaders: Cookie,Set-Cookie
+    examination:
+      service-id: technical-examination-service
+      sensitiveHeaders: Cookie,Set-Cookie
