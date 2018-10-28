@@ -11,6 +11,8 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 
   Page<NotificationEntity> findAllByUsername(String username, Pageable pageable);
 
-  List<NotificationEntity> findTop5ByUsernameAndRead(String username, Boolean read);
+  List<NotificationEntity> findTop5ByUsernameAndReadOrderByAddedAtDescId(String username, Boolean read);
+
+  Long countByUsernameAndRead(String username, Boolean read);
 
 }

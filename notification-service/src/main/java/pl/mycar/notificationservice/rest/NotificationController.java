@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.mycar.notificationservice.exception.NotificationNotFoundException;
 import pl.mycar.notificationservice.exception.UnauthorizedException;
 import pl.mycar.notificationservice.model.dto.ReadNotificationDTO;
+import pl.mycar.notificationservice.model.dto.UnreadNotificationsDTO;
 import pl.mycar.notificationservice.service.NotificationService;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,11 +36,11 @@ public class NotificationController {
 
   @GetMapping(value = "/unread-notifications", produces = MediaType.APPLICATION_JSON_VALUE)
   @Secured("ROLE_USER")
-  ResponseEntity<List<ReadNotificationDTO>> readFirst5UnreadNotifications(Principal principal) {
-    List<ReadNotificationDTO> unReadNotificationDTOS =
-        notificationService.readFirst5UnreadNotificationsByPrincipal(principal);
+  ResponseEntity<UnreadNotificationsDTO> readFirst5UnreadNotifications(Principal principal) {
+    UnreadNotificationsDTO unreadNotificationsDTO = notificationService
+        .readFirst5UnreadNotificationsByPrincipal(principal);
 
-    return ResponseEntity.ok(unReadNotificationDTOS);
+    return ResponseEntity.ok(unreadNotificationsDTO);
   }
 
   @PutMapping(value = "/notifications/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

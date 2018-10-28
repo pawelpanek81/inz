@@ -16,7 +16,7 @@ public class NotificationEntity {
 
   @Id
   @SequenceGenerator(name = "notification_generator",
-      sequenceName = "notification_seq", initialValue = 7)
+      sequenceName = "notification_seq", initialValue = 9)
   @GeneratedValue(generator = "notification_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

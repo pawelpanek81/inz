@@ -9,6 +9,7 @@ import pl.mycar.notificationservice.exception.UnauthorizedException;
 import pl.mycar.notificationservice.mapper.NotificationMapper;
 import pl.mycar.notificationservice.model.dto.CreateNotificationDTO;
 import pl.mycar.notificationservice.model.dto.ReadNotificationDTO;
+import pl.mycar.notificationservice.model.dto.UnreadNotificationsDTO;
 import pl.mycar.notificationservice.persistence.entity.NotificationEntity;
 import pl.mycar.notificationservice.persistence.repository.NotificationRepository;
 
@@ -30,14 +31,19 @@ public class NotificationServiceImpl implements NotificationService {
   @Override
   public Page<ReadNotificationDTO> readAllNotificationsByPrincipal(Principal principal, Pageable pageable) {
     String username = principal.getName();
-    return notificationRepository.findAllByUsername(username, pageable)
-    .map(NotificationMapper.toDTOMapper);
+    Page<ReadNotificationDTO> pageOfNotifications = notificationRepository.findAllByUsername(username, pageable)
+        .map(NotificationMapper.toDTOMapper);
+    pageOfNotifications.forEach(dto -> dto.setCar("Call to Car Microservice"));
+
+    return pageOfNotifications;
   }
 
   @Override
-  public List<ReadNotificationDTO> readFirst5UnreadNotificationsByPrincipal(Principal principal) {
+  public UnreadNotificationsDTO readFirst5UnreadNotificationsByPrincipal(Principal principal) {
     String username = principal.getName();
-    List<NotificationEntity> top5ByUsernameAndRead = notificationRepository.findTop5ByUsernameAndRead(username, false);
+    List<NotificationEntity> top5ByUsernameAndRead = notificationRepository
+        .findTop5ByUsernameAndReadOrderByAddedAtDescId(username, false);
+    Long count = notificationRepository.countByUsernameAndRead(username, false);
 
     List<ReadNotificationDTO> notificationDTOS = top5ByUsernameAndRead.stream()
         .map(NotificationMapper.toDTOMapper)
@@ -45,7 +51,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     notificationDTOS.forEach(dto -> dto.setCar("Call to Car Microservice"));
 
-    return notificationDTOS;
+    return new UnreadNotificationsDTO(notificationDTOS, count);
   }
 
   @Override
