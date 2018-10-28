@@ -27,7 +27,7 @@ public class NotificationEntity {
   @Column(name = "header", nullable = false, length = 50)
   private String header;
 
-  @Column(name = "text")
+  @Column(name = "text", length = 2048)
   private String text;
 
   @Column(name = "read")

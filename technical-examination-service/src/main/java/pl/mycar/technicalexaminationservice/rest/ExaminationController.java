@@ -35,7 +35,7 @@ public class ExaminationController {
   }
 
   @PostMapping("")
-//  @Secured("ROLE_USER")
+  @Secured("ROLE_USER")
   ResponseEntity<?> addExamination(CreateExaminationDTO dto,
                                    @RequestParam(value = "multipartfiles") List<MultipartFile> files,
                                    Principal principal) {
