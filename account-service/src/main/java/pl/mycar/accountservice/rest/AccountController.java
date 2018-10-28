@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -55,6 +56,7 @@ public class AccountController {
   }
 
   @GetMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+  @Secured("ROLE_USER")
   ResponseEntity<ReadAccountDTO> accountInfo(Principal principal) {
     Optional<AccountEntity> optionalOfAccountEntity = accountService.readByPrincipal(principal);
 

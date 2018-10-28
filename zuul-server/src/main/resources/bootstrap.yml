@@ -39,6 +39,7 @@ zuul:
       sensitiveHeaders: Cookie,Set-Cookie
     account:
       serviceId: account-service
+      sensitiveHeaders: Cookie,Set-Cookie
     auth:
       path: /auth/**
       service-id: auth-server
