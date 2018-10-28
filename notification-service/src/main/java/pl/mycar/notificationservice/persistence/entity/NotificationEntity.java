@@ -24,7 +24,10 @@ public class NotificationEntity {
   @Column(name = "added_at",  nullable = false)
   private LocalDateTime addedAt;
 
-  @Column(name = "text", nullable = false)
+  @Column(name = "header", nullable = false, length = 50)
+  private String header;
+
+  @Column(name = "text")
   private String text;
 
   @Column(name = "read")

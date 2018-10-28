@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ReadNotificationDTO {
   private Long id;
   private LocalDateTime addedAt;
+  private String header;
   private String text;
   private Boolean read;
   private String car;

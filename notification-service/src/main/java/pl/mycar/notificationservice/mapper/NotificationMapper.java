@@ -11,6 +11,7 @@ public class NotificationMapper {
   public static Function<NotificationEntity, ReadNotificationDTO> toDTOMapper = entity -> new ReadNotificationDTO(
       entity.getId(),
       entity.getAddedAt(),
+      entity.getHeader(),
       entity.getText(),
       entity.getRead(),
       entity.getCarId().toString()
@@ -20,6 +21,7 @@ public class NotificationMapper {
     return new NotificationEntity(
         null,
         null,
+        dto.getHeader(),
         dto.getText(),
         false,
         dto.getUsername(),

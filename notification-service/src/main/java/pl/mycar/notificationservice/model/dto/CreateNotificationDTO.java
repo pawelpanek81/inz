@@ -6,5 +6,6 @@ import lombok.Data;
 public class CreateNotificationDTO {
   private Long carId;
   private String username;
+  private String header;
   private String text;
 }
