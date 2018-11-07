@@ -16,5 +16,5 @@ public class ReadCarDTO {
   private Integer engineCapacity;
   private Double enginePowerInHP;
   private Integer productionYear;
-  private String VIN;
+  private String vin;
 }

@@ -16,7 +16,7 @@ public class CarMapper {
       carEntity.getEngineCapacity(),
       carEntity.getEnginePowerInHP(),
       carEntity.getProductionYear(),
-      carEntity.getVIN()
+      carEntity.getVin()
   );
 
   public static CarEntity mapToEntity(CreateCarDTO dto) {
@@ -29,7 +29,7 @@ public class CarMapper {
         dto.getEngineCapacity(),
         dto.getEnginePowerInHP(),
         dto.getProductionYear(),
-        dto.getVIN()
+        dto.getVin()
     );
   }
 }

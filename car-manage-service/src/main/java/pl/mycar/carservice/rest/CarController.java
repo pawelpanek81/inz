@@ -24,7 +24,7 @@ public class CarController {
     this.carService = carService;
   }
 
-  @GetMapping("/")
+  @GetMapping()
   @Secured("ROLE_USER")
   ResponseEntity<List<ReadCarDTO>> getAllCars(Principal principal) {
     List<ReadCarDTO> userCarDTOS = carService.readUserCars(principal);
@@ -46,7 +46,7 @@ public class CarController {
     return ResponseEntity.ok(carDTO);
   }
 
-  @PostMapping("/")
+  @PostMapping()
   @Secured("ROLE_USER")
   ResponseEntity<ReadCarDTO> addCar(Principal principal, @RequestBody CreateCarDTO dto) {
     ReadCarDTO createdCarDTO = carService.createCar(principal, dto);

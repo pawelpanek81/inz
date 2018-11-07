@@ -31,5 +31,5 @@ public class CreateCarDTO {
   private Integer productionYear;
 
   @NotBlank
-  private String VIN;
+  private String vin;
 }
