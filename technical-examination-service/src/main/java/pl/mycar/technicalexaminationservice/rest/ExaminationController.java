@@ -1,5 +1,6 @@
 package pl.mycar.technicalexaminationservice.rest;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,9 @@ import pl.mycar.technicalexaminationservice.service.ExaminationDocumentService;
 import pl.mycar.technicalexaminationservice.service.ExaminationService;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("examinations")
@@ -53,6 +56,14 @@ public class ExaminationController {
                                    @RequestParam(value = "multipartfiles") List<MultipartFile> files,
                                    Principal principal) {
     try {
+      for (MultipartFile file : files) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        List<String> extensions = Arrays.asList("pdf", "jpg", "jpeg", "gif", "png", "bmp");
+        if (!extensions.contains(Objects.requireNonNull(extension)) || file.getSize() > 5) {
+          return ResponseEntity.badRequest().build();
+        }
+      }
+
       ReadExaminationDTO createdExaminationDto = examinationService.createExamination(dto, principal);
       files.forEach(file -> examinationDocumentService.addDocument(file, createdExaminationDto.getId()));
 
