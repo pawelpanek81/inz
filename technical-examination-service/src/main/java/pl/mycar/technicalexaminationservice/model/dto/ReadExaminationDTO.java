@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,4 +15,5 @@ public class ReadExaminationDTO {
   private LocalDate examinationDate;
   private String car;
   private String description;
+  private List<ReadDocumentDTO> documents;
 }

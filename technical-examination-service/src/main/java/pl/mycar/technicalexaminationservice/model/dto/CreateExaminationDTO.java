@@ -12,11 +12,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateExaminationDTO {
-//  @NotNull
+  @NotNull
   @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
   private LocalDate examinationDate;
 
-//  @NotNull
+  @NotNull
   private Long carId;
 
   private String description;

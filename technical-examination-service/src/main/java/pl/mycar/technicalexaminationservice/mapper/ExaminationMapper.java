@@ -11,7 +11,8 @@ public class ExaminationMapper {
       entity.getId(),
       entity.getExaminationDate(),
       null,
-      entity.getDescription()
+      entity.getDescription(),
+      null
   );
 
   public static ExaminationEntity mapToEntity(CreateExaminationDTO dto) {
