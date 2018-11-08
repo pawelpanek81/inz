@@ -1,6 +1,5 @@
 package pl.mycar.technicalexaminationservice.rest;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,15 +9,14 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.mycar.technicalexaminationservice.exception.CarNotFoundException;
+import pl.mycar.technicalexaminationservice.exception.InvalidFilesException;
 import pl.mycar.technicalexaminationservice.model.dto.CreateExaminationDTO;
 import pl.mycar.technicalexaminationservice.model.dto.ReadExaminationDTO;
 import pl.mycar.technicalexaminationservice.service.ExaminationDocumentService;
 import pl.mycar.technicalexaminationservice.service.ExaminationService;
 
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("examinations")
@@ -56,17 +54,11 @@ public class ExaminationController {
                                    @RequestParam(value = "multipartfiles") List<MultipartFile> files,
                                    Principal principal) {
     try {
-      if (files.size() > 5) {
-        return ResponseEntity.badRequest().build();
-      }
-      for (MultipartFile file : files) {
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        List<String> extensions = Arrays.asList("pdf", "jpg", "jpeg", "gif", "png", "bmp");
-        if (!extensions.contains(Objects.requireNonNull(extension)) || file.getSize() > 5 * 1024 * 1024) {
-          return ResponseEntity.badRequest().build();
-        }
-      }
-
+      examinationService.validateFiles(files);
+    } catch (InvalidFilesException e) {
+      return ResponseEntity.badRequest().build();
+    }
+    try {
       ReadExaminationDTO createdExaminationDto = examinationService.createExamination(dto, principal);
       files.forEach(file -> examinationDocumentService.addDocument(file, createdExaminationDto.getId()));
 
