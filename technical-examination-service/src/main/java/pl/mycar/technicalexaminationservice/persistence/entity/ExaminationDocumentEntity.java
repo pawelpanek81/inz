@@ -29,8 +29,7 @@ public class ExaminationDocumentEntity {
   @Column(name = "file_name", nullable = false)
   private String fileName;
 
-  //@Lob
-  //@Column(name = "content", columnDefinition = "BLOB", nullable = false)
-  @Column(name = "content", nullable = false, length = 5 * 1024 * 1024)
+  @Lob
+  @Column(name = "content", nullable = false)
   private byte[] content;
 }

@@ -56,10 +56,13 @@ public class ExaminationController {
                                    @RequestParam(value = "multipartfiles") List<MultipartFile> files,
                                    Principal principal) {
     try {
+      if (files.size() > 5) {
+        return ResponseEntity.badRequest().build();
+      }
       for (MultipartFile file : files) {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         List<String> extensions = Arrays.asList("pdf", "jpg", "jpeg", "gif", "png", "bmp");
-        if (!extensions.contains(Objects.requireNonNull(extension)) || file.getSize() > 5) {
+        if (!extensions.contains(Objects.requireNonNull(extension)) || file.getSize() > 5 * 1024 * 1024) {
           return ResponseEntity.badRequest().build();
         }
       }
