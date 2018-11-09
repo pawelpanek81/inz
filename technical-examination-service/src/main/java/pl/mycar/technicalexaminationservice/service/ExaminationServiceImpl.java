@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class ExaminationServiceImpl implements ExaminationService {
   private static final List<String> ALLOWED_EXTENSION_LIST = Arrays.asList("pdf", "jpg", "jpeg", "gif", "png", "bmp");
   private static final int ALLOWED_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
-  public static final int ALLOWED_MAX_FILES_COUNT = 5;
+  private static final int ALLOWED_MAX_FILES_COUNT = 5;
   private ExaminationRepository examinationRepository;
   private ExaminationDocumentRepository examinationDocumentRepository;
   private CarClient carClient;

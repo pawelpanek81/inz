@@ -32,7 +32,7 @@ public class ExaminationController {
 
   @GetMapping("")
   @Secured("ROLE_USER")
-  ResponseEntity<Page<ReadExaminationDTO>> getAllExaminations(@RequestParam(value = "carId") Long carId,
+  ResponseEntity<Page<ReadExaminationDTO>> getExaminationPage(@RequestParam(value = "carId") Long carId,
                                                               Pageable pageable,
                                                               Principal principal) {
     Page<ReadExaminationDTO> examinationDTOS = examinationService.readAllExaminationsByCarId(carId, principal, pageable);

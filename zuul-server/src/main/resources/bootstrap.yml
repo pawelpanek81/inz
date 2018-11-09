@@ -54,3 +54,6 @@ zuul:
     examination:
       service-id: technical-examination-service
       sensitiveHeaders: Cookie,Set-Cookie
+    insurance:
+      service-id: insurance-service
+      sensitiveHeaders: Cookie,Set-Cookie

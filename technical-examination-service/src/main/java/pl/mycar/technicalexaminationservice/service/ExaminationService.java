@@ -10,9 +10,10 @@ import java.security.Principal;
 import java.util.List;
 
 public interface ExaminationService {
+
   ReadExaminationDTO createExamination(CreateExaminationDTO dto, Principal principal);
 
-  ReadExaminationDTO readExaminationById(Long carId, Principal principal);
+  ReadExaminationDTO readExaminationById(Long examinationId, Principal principal);
 
   Page<ReadExaminationDTO> readAllExaminationsByCarId(Long carId, Principal principal, Pageable pageable);
 

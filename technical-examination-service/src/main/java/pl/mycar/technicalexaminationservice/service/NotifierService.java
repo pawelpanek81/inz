@@ -30,7 +30,7 @@ public class NotifierService {
     this.examinationRepository = examinationRepository;
   }
 
-  @Scheduled(cron = "0 1 * * *")
+  @Scheduled(cron = "0 0 1 * * ?")
   public void sendExaminationExpiresPushNotification() {
     System.out.println("Wysyłam....");
     List<ExaminationEntity> examinations = examinationRepository.findAll();

@@ -24,7 +24,7 @@ public class ExaminationEntity {
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
 
-  @Column(name = "username")
+  @Column(name = "username", nullable = false)
   private String username;
 
   @Column(name = "examination_date", nullable = false)

@@ -44,6 +44,7 @@ append microservices domain names to ip:
 # 127.0.0.1 db-postgres-notification-service
 # 127.0.0.1 db-postgres-technical-examination-service
 # 127.0.0.1 db-postgres-car-service
+# 127.0.0.1 db-postgres-insurance-service
 ```
 append database domain names to ip:
 ```
@@ -61,6 +62,7 @@ docker-compose run -p 5001:5432 db-postgres-map-service
 docker-compose run -p 5002:5432 db-postgres-notification-service
 docker-compose run -p 5003:5432 db-postgres-technical-examination-service
 docker-compose run -p 5004:5432 db-postgres-car-service
+docker-compose run -p 5005:5432 db-postgres-insurance-service
 ```
 
 #### Instructions
@@ -108,6 +110,7 @@ docker-compose down
 | notification-service-db | 5432 | 5002 | notification-db-user | toor | db-postgres-notification-service |
 | technical-examination-service-db | 5432 | 5003 | technical-examination-db-user | toor | db-postgres-technical-examination-service |
 | car-service-db | 5432 | 5004 | car-db-user | toor | db-postgres-car-service |
+| insurance-service-db | 5432 | 5005 | insurance-db-user | toor | db-postgres-insurance-service |
 
 ### RabbitMQ:
 | Docker service name | Docker Port | Docker-Compose Exposed Port | 

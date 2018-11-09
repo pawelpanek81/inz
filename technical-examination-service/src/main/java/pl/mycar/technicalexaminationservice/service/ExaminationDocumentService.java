@@ -9,4 +9,5 @@ public interface ExaminationDocumentService {
   void addDocument(MultipartFile file, Long examinationId);
 
   byte[] getDocument(Long documentId, Principal principal);
+
 }
