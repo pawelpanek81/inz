@@ -9,12 +9,14 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.mycar.insuranceservice.exception.CarNotFoundException;
+import pl.mycar.insuranceservice.exception.DatesHaveCommonPartException;
 import pl.mycar.insuranceservice.exception.InvalidFilesException;
 import pl.mycar.insuranceservice.model.dto.CreateInsuranceDTO;
 import pl.mycar.insuranceservice.model.dto.ReadInsuranceDTO;
 import pl.mycar.insuranceservice.service.InsuranceDocumentService;
 import pl.mycar.insuranceservice.service.InsuranceService;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class InsuranceController {
     return ResponseEntity.ok(insuranceDTOPage);
   }
 
-  @GetMapping("/last-third-party-insurance")
+  @GetMapping("last-third-party-insurance")
   @Secured("ROLE_USER")
   ResponseEntity<ReadInsuranceDTO> getLastThirdPartyInsurance(@RequestParam(value = "carId") Long carId,
                                                               Principal principal) {
@@ -50,7 +52,7 @@ public class InsuranceController {
     return ResponseEntity.ok(readInsuranceDTO);
   }
 
-  @GetMapping("/last-fully-insurance")
+  @GetMapping("last-fully-insurance")
   @Secured("ROLE_USER")
   ResponseEntity<ReadInsuranceDTO> getLastFullyInsurance(@RequestParam(value = "carId") Long carId,
                                                          Principal principal) {
@@ -63,7 +65,7 @@ public class InsuranceController {
 
   @PostMapping("")
   @Secured("ROLE_USER")
-  ResponseEntity<?> addInsurance(CreateInsuranceDTO dto,
+  ResponseEntity<?> addInsurance(@Valid CreateInsuranceDTO dto,
                                  @RequestParam(value = "multipartfiles") List<MultipartFile> files,
                                  Principal principal) {
     try {
@@ -75,7 +77,7 @@ public class InsuranceController {
       ReadInsuranceDTO createdInsuranceDTO = insuranceService.createInsurance(dto, principal);
       files.forEach(file -> insuranceDocumentService.addDocument(file, createdInsuranceDTO.getId()));
 
-    } catch (CarNotFoundException e) {
+    } catch (CarNotFoundException | DatesHaveCommonPartException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     return ResponseEntity.ok().build();

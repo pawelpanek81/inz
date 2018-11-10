@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import pl.mycar.insuranceservice.exception.CarNotFoundException;
+import pl.mycar.insuranceservice.exception.DatesHaveCommonPartException;
 import pl.mycar.insuranceservice.exception.InsuranceNotFoundException;
 import pl.mycar.insuranceservice.exception.InvalidFilesException;
 import pl.mycar.insuranceservice.feign.CarClient;
@@ -24,6 +25,7 @@ import pl.mycar.insuranceservice.persistence.repository.InsuranceDocumentReposit
 import pl.mycar.insuranceservice.persistence.repository.InsuranceRepository;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -53,11 +55,41 @@ public class InsuranceServiceImpl implements InsuranceService {
 
   @Override
   public ReadInsuranceDTO createInsurance(CreateInsuranceDTO dto, Principal principal) {
+    if (!datesValid(dto, principal)) {
+      throw new DatesHaveCommonPartException();
+    }
+
     getCarInfo(dto.getCarId());
     InsuranceEntity insuranceEntity = modelMapper.map(dto, InsuranceEntity.class);
     insuranceEntity.setUsername(principal.getName());
     InsuranceEntity save = insuranceRepository.save(insuranceEntity);
     return readInsuranceById(save.getId(), principal);
+  }
+
+  private boolean datesValid(CreateInsuranceDTO dto, Principal principal) {
+    List<InsuranceEntity> insurances = insuranceRepository
+        .findAllByCarIdAndUsernameAndType(dto.getCarId(), principal.getName(), dto.getType());
+
+    for (InsuranceEntity insuranceEntity : insurances) {
+      LocalDate existingFromDate = insuranceEntity.getFromDate();
+      LocalDate existingToDate = insuranceEntity.getToDate();
+
+      if (existingFromDate.isBefore(dto.getFromDate()) &&
+          dto.getFromDate().isBefore(existingToDate)) {
+        return false;
+      }
+      if (existingFromDate.isBefore(dto.getToDate()) &&
+          dto.getToDate().isBefore(existingToDate)) {
+        return false;
+      }
+      if (dto.getFromDate().equals(existingFromDate)) {
+        return false;
+      }
+      if (dto.getToDate().equals(existingToDate)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override
@@ -70,6 +102,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
     InsuranceEntity insuranceEntity = optionalOfInsurance.get();
     ReadInsuranceDTO dto = modelMapper.map(insuranceEntity, ReadInsuranceDTO.class);
+    dto.setCar(getCarInfo(insuranceEntity.getCarId()));
     List<InsuranceDocumentEntity> documents = insuranceDocumentRepository.findAllByInsuranceId(dto.getId());
     List<ReadDocumentDTO> documentDTOS = documents.stream()
         .map(doc -> new ReadDocumentDTO(doc.getFileName(), doc.getId()))
@@ -100,7 +133,7 @@ public class InsuranceServiceImpl implements InsuranceService {
   public ReadInsuranceDTO readLastThirdPartyInsurance(Long carId, Principal principal) {
     String username = principal.getName();
     Optional<InsuranceEntity> optionalOfInsurance =
-        insuranceRepository.findTop1ByCarIdAndUsernameAndTypeOrderByToDateDescId(carId, InsuranceType.THIRD_PARTY, username);
+        insuranceRepository.findTop1ByCarIdAndUsernameAndTypeOrderByToDateDescId(carId, username, InsuranceType.THIRD_PARTY);
     if (!optionalOfInsurance.isPresent()) {
       return null;
     }
@@ -111,7 +144,7 @@ public class InsuranceServiceImpl implements InsuranceService {
   public ReadInsuranceDTO readLastFullyInsurance(Long carId, Principal principal) {
     String username = principal.getName();
     Optional<InsuranceEntity> optionalOfInsurance =
-        insuranceRepository.findTop1ByCarIdAndUsernameAndTypeOrderByToDateDescId(carId, InsuranceType.FULLY, username);
+        insuranceRepository.findTop1ByCarIdAndUsernameAndTypeOrderByToDateDescId(carId, username, InsuranceType.FULLY);
     if (!optionalOfInsurance.isPresent()) {
       return null;
     }

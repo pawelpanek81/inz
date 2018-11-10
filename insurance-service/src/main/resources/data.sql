@@ -1,2 +1,2 @@
 insert into insurances (id, from_date, to_date, cost, type, car_id, username, description)
-values (1, '2017-10-23', '2018-10-23', 1000, 'THIRD_PARTY', 1, 'pawel96', 'Uzyskałem dodatkową zniżkę u agenta tel. 123 123 123');
+values (1, '2017-11-09', '2018-11-11', 1000, 'THIRD_PARTY', 1, 'pawel96', 'Uzyskałem dodatkową zniżkę u agenta tel. 123 123 123');
