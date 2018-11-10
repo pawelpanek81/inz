@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CreateExaminationDTO {
   @NotNull
-  @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate examinationDate;
 
   @NotNull

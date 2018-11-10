@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.mycar.carservice.model.database.ServiceType;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "services")
@@ -28,10 +29,17 @@ public class ServiceEntity {
   private CarEntity car;
 
   @Column(name = "service_date", nullable = false)
-  private LocalDateTime serviceDate;
+  private LocalDate serviceDate;
+
+  @Column(name = "service_type", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private ServiceType serviceType;
 
   @Column(name = "mileage", nullable = false)
   private Double mileage;
+
+  @Column(name = "header", nullable = false)
+  private String header;
 
   @Column(name = "description", nullable = false)
   private String description;
