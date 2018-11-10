@@ -1,4 +1,4 @@
-package pl.mycar.carservice.service;
+package pl.mycar.carservice.service.car;
 
 import pl.mycar.carservice.model.dto.CreateCarDTO;
 import pl.mycar.carservice.model.dto.ReadCarDTO;

@@ -1,4 +1,4 @@
-package pl.mycar.carservice.service;
+package pl.mycar.carservice.service.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import pl.mycar.carservice.model.dto.CreateServiceDTO;

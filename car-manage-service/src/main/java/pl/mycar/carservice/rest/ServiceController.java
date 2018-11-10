@@ -13,8 +13,8 @@ import pl.mycar.carservice.exception.CarNotFoundException;
 import pl.mycar.carservice.exception.InvalidFilesException;
 import pl.mycar.carservice.exception.UnauthorizedException;
 import pl.mycar.carservice.model.dto.CreateServiceDTO;
-import pl.mycar.carservice.service.ServiceDocumentService;
-import pl.mycar.carservice.service.ServiceService;
+import pl.mycar.carservice.service.service.ServiceDocumentService;
+import pl.mycar.carservice.service.service.ServiceService;
 
 import java.security.Principal;
 import java.util.List;

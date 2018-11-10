@@ -9,7 +9,7 @@ import pl.mycar.carservice.exception.CarNotFoundException;
 import pl.mycar.carservice.exception.UnauthorizedException;
 import pl.mycar.carservice.model.dto.CreateCarDTO;
 import pl.mycar.carservice.model.dto.ReadCarDTO;
-import pl.mycar.carservice.service.CarService;
+import pl.mycar.carservice.service.car.CarService;
 
 import java.security.Principal;
 import java.util.List;

@@ -1,4 +1,4 @@
-package pl.mycar.carservice.service;
+package pl.mycar.carservice.service.service;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
