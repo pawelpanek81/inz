@@ -101,6 +101,7 @@ docker-compose down
 | Technical Examination Service | 8085 | technical-examination-service |
 | Car Service | 8086 | car-service |
 | Insurance Service | 8087 | insurance-service |
+| Turbine Server | 9094 | turbine-server |
 
 ### Databases:
 | Database name | Docker host | Docker-Compose Exposed Port | User | Password | Docker service name |
