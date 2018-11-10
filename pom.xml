@@ -25,6 +25,7 @@
     <module>technical-examination-service</module>
     <module>car-manage-service</module>
     <module>insurance-service</module>
+    <module>turbine-service</module>
   </modules>
 
   <parent>
