@@ -3,6 +3,9 @@ package pl.mycar.carservice.service.report;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +18,12 @@ import pl.mycar.carservice.persistence.repository.CarRepository;
 import pl.mycar.carservice.persistence.repository.ServiceRepository;
 import pl.mycar.carservice.service.service.ServiceDocumentService;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.Principal;
@@ -188,7 +195,7 @@ public class ReportServiceImpl implements ReportService {
         document.add(l);
 
         for (ServiceDocumentEntity doc : documents) {
-          document.newPage();
+//          document.newPage();
           if (!FilenameUtils.getExtension(doc.getFileName()).equals("pdf")) {
             Image img = Image.getInstance(doc.getContent());
             img.scaleToFit(
@@ -197,15 +204,20 @@ public class ReportServiceImpl implements ReportService {
             );
             document.add(img);
           } else {
-            org.apache.pdfbox.pdmodel.PDDocument d = new org.apache.pdfbox.pdmodel.PDDocument();
-//            d.load(new ByteArrayInputStream(doc.getContent()));
-//            SimpleRenderer renderer = new SimpleRenderer();
-//            renderer.setResolution(600);
-//            List<java.awt.Image> images = renderer.render(d);
-//            for (java.awt.Image img : images) {
-//              Image i = Image.getInstance(img, null);
-//              document.add(i);
-//            }
+            PDDocument d = PDDocument.load(doc.getContent());
+            PDFRenderer pdfRenderer = new PDFRenderer(d);
+            for (int page = 0; page < d.getNumberOfPages(); ++page) {
+              BufferedImage bim = pdfRenderer.renderImageWithDPI(page, 300, ImageType.RGB);
+              ByteArrayOutputStream baos = new ByteArrayOutputStream();
+              ImageIO.write(bim, "jpeg", baos);
+              Image iTextImage = Image.getInstance(baos.toByteArray());
+              iTextImage.scaleToFit(
+                  document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin(),
+                  document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin()
+              );
+              document.add(iTextImage);
+            }
+            d.close();
           }
         }
       }
