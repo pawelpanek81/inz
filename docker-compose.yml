@@ -34,6 +34,7 @@ services:
     depends_on:
       - eureka-server
       - config-server
+      - account-service
     restart: always
 
   map-service:
@@ -64,6 +65,7 @@ services:
     depends_on:
       - config-server
       - eureka-server
+      - rabbitmq
     restart: always
 
   technical-examination-service:
@@ -74,6 +76,7 @@ services:
     depends_on:
       - config-server
       - eureka-server
+      - rabbitmq
     restart: always
 
   car-manage-service:
@@ -94,6 +97,7 @@ services:
     depends_on:
       - config-server
       - eureka-server
+      - rabbitmq
     restart: always
 
   turbine-service:
