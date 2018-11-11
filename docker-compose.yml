@@ -56,6 +56,59 @@ services:
       - eureka-server
     restart: always
 
+  notification-service:
+    container_name: mycar-notification-service
+    image: mycar/notification-service:latest
+    ports:
+      - "8084-8084"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  technical-examination-service:
+    container_name: mycar-technical-examination-service
+    image: mycar/technical-examination-service:latest
+    ports:
+      - "8085-8085"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  car-manage-service:
+    container_name: mycar-car-manage-service
+    image: mycar/car-manage-service:latest
+    ports:
+      - "8086-8086"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  insurance-service:
+    container_name: mycar-insurance-service
+    image: mycar/insurance-service:latest
+    ports:
+      - "8087-8087"
+    depends_on:
+      - config-server
+      - eureka-server
+    restart: always
+
+  turbine-server:
+    container_name: mycar-turbine-server
+    image: mycar/turbine-server:latest
+    ports:
+      - "9094-9094"
+    depends_on:
+      - config-server
+      - eureka-server
+      - notification-service
+      - technical-examination-service
+      - insurance-service
+    restart: always
+
   db-postgres-account-service:
     container_name: postgres-account
     image: postgres:latest
