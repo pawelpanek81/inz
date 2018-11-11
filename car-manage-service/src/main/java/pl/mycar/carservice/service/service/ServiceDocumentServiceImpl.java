@@ -13,6 +13,7 @@ import pl.mycar.carservice.persistence.repository.ServiceRepository;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,9 +57,14 @@ public class ServiceDocumentServiceImpl implements ServiceDocumentService {
     }
     ServiceDocumentEntity entity = optionalOfDocument.get();
     String username = principal.getName();
-    if (!entity.getServiceEntity().getCar().getOwner().equals(username)) {
+    if (!entity.getService().getCar().getOwner().equals(username)) {
       throw new UnauthorizedException();
     }
     return entity.getContent();
+  }
+
+  @Override
+  public List<ServiceDocumentEntity> getDocuments(Long serviceId) {
+    return serviceDocumentRepository.findAllByServiceId(serviceId);
   }
 }

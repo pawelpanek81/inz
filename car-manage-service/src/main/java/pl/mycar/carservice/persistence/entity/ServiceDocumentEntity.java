@@ -24,7 +24,7 @@ public class ServiceDocumentEntity {
 
   @ManyToOne
   @JoinColumn(name = "service_id", nullable = false)
-  private ServiceEntity serviceEntity;
+  private ServiceEntity service;
 
   @Column(name = "file_name", nullable = false)
   private String fileName;

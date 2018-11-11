@@ -41,7 +41,7 @@ public class ServiceEntity {
   @Column(name = "header", nullable = false)
   private String header;
 
-  @Column(name = "description", nullable = false)
+  @Column(name = "description", nullable = false, length = 10000)
   private String description;
 
   @Column(name = "cost", nullable = false)

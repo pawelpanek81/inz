@@ -28,7 +28,8 @@ public class ServiceServiceImpl implements ServiceService {
   private CarRepository carRepository;
 
   @Autowired
-  public ServiceServiceImpl(ServiceRepository serviceRepository, CarRepository carRepository) {
+  public ServiceServiceImpl(ServiceRepository serviceRepository,
+                            CarRepository carRepository) {
     this.serviceRepository = serviceRepository;
     this.carRepository = carRepository;
   }
