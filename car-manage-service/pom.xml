@@ -9,12 +9,12 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>car-service</artifactId>
+	<artifactId>car-manage-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Car Service</name>
-	<description>Car Service</description>
+	<name>Car Manage Service</name>
+	<description>Car Manage Service</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
