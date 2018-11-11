@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
-  private static final List<String> ALLOWED_EXTENSION_LIST = Arrays.asList("pdf", "jpg", "jpeg", "gif", "png", "bmp");
+  private static final List<String> ALLOWED_EXTENSION_LIST = Arrays.asList("jpg", "jpeg", "gif", "png", "bmp");
   private static final int ALLOWED_MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
   private static final int ALLOWED_MAX_FILES_COUNT = 5;
   private ServiceRepository serviceRepository;
