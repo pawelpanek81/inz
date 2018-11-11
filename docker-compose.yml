@@ -78,7 +78,7 @@ services:
 
   car-manage-service:
     container_name: mycar-car-manage-service
-    image: mycar/car-manage-service:latest
+    image: mycar/car-service:latest
     ports:
       - "8086-8086"
     depends_on:
@@ -96,9 +96,9 @@ services:
       - eureka-server
     restart: always
 
-  turbine-server:
-    container_name: mycar-turbine-server
-    image: mycar/turbine-server:latest
+  turbine-service:
+    container_name: mycar-turbine-service
+    image: mycar/turbine-service:latest
     ports:
       - "9094-9094"
     depends_on:
