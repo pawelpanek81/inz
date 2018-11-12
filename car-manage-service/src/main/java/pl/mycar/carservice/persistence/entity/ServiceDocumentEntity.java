@@ -30,6 +30,6 @@ public class ServiceDocumentEntity {
   private String fileName;
 
   @Lob
-  @Column(name = "content", columnDefinition = "BLOB", nullable = false)
+  @Column(name = "content", nullable = false)
   private byte[] content;
 }
