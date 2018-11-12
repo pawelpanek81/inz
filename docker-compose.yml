@@ -81,7 +81,7 @@ services:
 
   car-manage-service:
     container_name: mycar-car-manage-service
-    image: mycar/car-service:latest
+    image: mycar/car-manage-service:latest
     ports:
       - "8086-8086"
     depends_on:
