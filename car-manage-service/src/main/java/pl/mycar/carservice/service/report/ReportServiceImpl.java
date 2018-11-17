@@ -187,10 +187,12 @@ public class ReportServiceImpl implements ReportService {
 
         for (ServiceDocumentEntity doc : documents) {
           Image img = Image.getInstance(doc.getContent());
-          img.scaleToFit(
-              document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin(),
-              document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin()
-          );
+          if (img.getWidth() > document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin()) {
+            img.scaleToFit(
+                document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin(),
+                document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin()
+            );
+          }
           document.add(img);
         }
       }
