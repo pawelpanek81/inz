@@ -3,18 +3,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>turbine-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>turbine-service</name>
-	<description>Turbine Service</description>
-
 	<parent>
 		<groupId>pl.mycar</groupId>
 		<artifactId>mycar</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
+
+	<artifactId>turbine-service</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>Turbine Service</name>
+	<description>Turbine Service</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -12,5 +12,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 CMD dockerize -wait tcp://config-server:9090 \
               -wait tcp://eureka-server:9091 \
+              -wait tcp://db-postgres-car-service:5432 \
+              -wait tcp://rabbitmq:5672 \
               -timeout 8m \
               java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
