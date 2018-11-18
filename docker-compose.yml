@@ -41,7 +41,7 @@ services:
     container_name: mycar-map-service
     image: mycar/map-service:latest
     ports:
-      - "8082-8082"
+      - "8082:8082"
     depends_on:
       - config-server
       - eureka-server
@@ -51,7 +51,7 @@ services:
     container_name: mycar-account-service
     image: mycar/account-service:latest
     ports:
-      - "8083-8083"
+      - "8083:8083"
     depends_on:
       - config-server
       - eureka-server
@@ -61,7 +61,7 @@ services:
     container_name: mycar-notification-service
     image: mycar/notification-service:latest
     ports:
-      - "8084-8084"
+      - "8084:8084"
     depends_on:
       - config-server
       - eureka-server
@@ -72,7 +72,7 @@ services:
     container_name: mycar-technical-examination-service
     image: mycar/technical-examination-service:latest
     ports:
-      - "8085-8085"
+      - "8085:8085"
     depends_on:
       - config-server
       - eureka-server
@@ -83,7 +83,7 @@ services:
     container_name: mycar-car-manage-service
     image: mycar/car-manage-service:latest
     ports:
-      - "8086-8086"
+      - "8086:8086"
     depends_on:
       - config-server
       - eureka-server
@@ -93,7 +93,7 @@ services:
     container_name: mycar-insurance-service
     image: mycar/insurance-service:latest
     ports:
-      - "8087-8087"
+      - "8087:8087"
     depends_on:
       - config-server
       - eureka-server
@@ -104,7 +104,7 @@ services:
     container_name: mycar-turbine-service
     image: mycar/turbine-service:latest
     ports:
-      - "9094-9094"
+      - "9094:9094"
     depends_on:
       - config-server
       - eureka-server
