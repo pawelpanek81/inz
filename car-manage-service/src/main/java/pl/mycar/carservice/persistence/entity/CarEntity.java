@@ -45,6 +45,6 @@ public class CarEntity {
   @Column(name = "production_year", nullable = false)
   private Integer productionYear;
 
-  @Column(name = "vin", nullable = false)
+  @Column(name = "vin", nullable = false, unique = true)
   private String vin;
 }
