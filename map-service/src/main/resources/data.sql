@@ -9,12 +9,12 @@ values (2, 'Warsztat samochodowy', 'static/markers/darkgreen_MarkerA.png', 'car_
 -- Map Points
 insert into map_points(id, added_at, added_by, address, approved, city, company_name, info, latitude, longitude, phone,
                                                                                           www, zip_code, point_type_id)
-values (1, '2018-10-09', 'admin', 'Juliusza Słowackiego 6', true, 'Nowa Dęba', 'Moto-Art s.c. PPHU. Kosiorowscy', '',
-           '50.413028', '21.755959', '15 846 35 34', '', '39-460', 1);
+values (1, '2018-10-09', 'Karol5', 'Juliusza Słowackiego 1', true, 'Nowa Dęba', 'MotorX Sklep Motoryzacyjny', '',
+           '50.412956', '21.754604', '15 846 11 22', '', '39-460', 1);
 
 -- Ratings
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(1, '2018-10-09', 'Jacek', 'W sklepie kupowałem wycieraczki. Obsługa bardzo miła, polecam!',
+values(1, '2018-10-09', 'Jacek', 'W sklepie kupiłem wycieraczki. Obsługa okazała sie być bardzo miła, polecam!',
        'Wszystko w porządku', 5, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
@@ -23,56 +23,36 @@ values(2, '2018-10-09', 'Adam', 'Niewielki asortyment dostępny od ręki. Nie by
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
 values(3, '2018-10-09', 'Paweł',
-       'Cena sprzedanej mi żarówki H4 okazała się zbyt duża w porównaniu do konkurencji! Odradzam kupowania w tym sklepie.',
+       'Cena sprzedanej mi żarówki H4 okazała się zbyt wysoka w porównaniu z konkurencją! Odradzam kupowania w tym sklepie.',
        'Nie polecam', 2, 1);
 
 insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
-values(4, '2018-12-1', 'pawel96',
+values(4, '2018-11-16', 'pawel96',
        'Akumulatory dostępne w sklepie są nowej produkcji. U konkurencji można kupić zleżałe, kilkuletnie akumulatory.',
        'Polecam', 5, 1);
 
+insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
+values(5, '2018-11-20', 'user15',
+       'Uważam, że pracownicy tego sklepu są bardzo niekompetentni!',
+       'Nie polecam', 2, 1);
+
+insert into ratings(id, added_at, added_by, comment, header, rating, map_point_id)
+values(6, '2018-11-26', 'Olaa',
+       'Sklep nie jest duży, jednak zawiera wszystkie niezbędne artykuły.',
+       'Ok', 5, 1);
+
 -- Rating Comments
 insert into comments(id, added_at, added_by, comment, parent)
-values (1, '2018-10-10', 'admin', 'Dziękuję za opinie!', 4);
+values (1, '2018-10-10', 'Jan111', 'Dziękuję za opinię!', 4);
 
 insert into comments(id, added_at, added_by, comment, parent)
-values (2, '2018-10-11', 'admin', 'Również dziękuję!', 4);
+values (2, '2018-10-11', 'AdamK', 'Również dziękuję', 4);
 
 insert into comments(id, added_at, added_by, comment, parent)
-values (3, '2018-10-12', 'admin', 'Super, że podzieliłeś się z nami tą opinią. Nie skorzystam z usług tej firmy.', 4);
+values (3, '2018-10-13', 'Grzegorz1', 'Ja również kupowałem tam akumulator. Jestem bardzo zadowolony, użytkuję go już 5 rok.', 3);
 
 insert into comments(id, added_at, added_by, comment, parent)
-values (4, '2018-10-13', 'admin', 'Myślę, że kłamiesz.', 4);
+values (4, '2018-10-10', 'Olaa', 'Super, dzięki.', 4);
 
 insert into comments(id, added_at, added_by, comment, parent)
-values (5, '2018-10-13', 'admin', 'On nie okłamał, miałem dokładnie taką samą sytuację.', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (6, '2018-10-10', 'admin', 'Super, dzięki!', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (7, '2018-10-11', 'admin', 'Dobrz, że są tacy ludzie jak Ty!', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (8, '2018-10-12', 'admin', 'Myślę, że pracownicy mieli gorszy dzień.', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (9, '2018-10-13', 'admin', 'Również byłem w tej firmie dwa razy, mam podobne odczucia.', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (10, '2018-10-13', 'admin', 'Dodam jeszcze, że nie ma gdzie usiąść, czekając na auto.', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (11, '2018-10-10', 'admin', 'Na swoje auto czekałem 2 tygodnie!!!', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (12, '2018-10-11', 'admin', 'Dzięki za opinię.', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (13, '2018-10-12', 'admin', 'Naprawiałem u nich głowicę. Skasowali mnie na 3 tysiące złotych!', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (14, '2018-10-13', 'admin', 'Tanio to tam nie mają...', 4);
-
-insert into comments(id, added_at, added_by, comment, parent)
-values (15, '2018-10-13', 'admin', 'Szukają jeleni, żeby zarobić...', 4);
+values (5, '2018-10-11', 'Tomasz44', 'Dobrze, że podzieliłeś się z swoją opinią. Akurat planuję wymienić swój na zimę.', 4);
