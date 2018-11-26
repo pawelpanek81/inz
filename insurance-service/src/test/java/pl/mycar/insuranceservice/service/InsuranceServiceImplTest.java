@@ -57,13 +57,14 @@ public class InsuranceServiceImplTest {
     String brand = "Mercedes";
     String model = "W201";
 
+    when(principal.getName()).thenReturn(user);
+
     LocalDate fromDate1 = LocalDate.of(2018, 11, 24);
     LocalDate toDate1 = LocalDate.of(2018, 11, 27);
     CreateInsuranceDTO dto1 = new CreateInsuranceDTO(fromDate1, toDate1, 1000.0, InsuranceType.THIRD_PARTY, carId, "");
     InsuranceEntity insuranceEntity1 = modelMapper.map(dto1, InsuranceEntity.class);
     insuranceEntity1.setUsername(principal.getName());
 
-    when(principal.getName()).thenReturn(user);
     when(carClient.getCar(carId)).thenReturn(ResponseEntity.ok(new ReadCarDTO(carId, brand, model)));
     when(insuranceRepository.save(any())).thenReturn(insuranceEntity1);
     when(insuranceRepository.findByIdAndUsername(1L, user)).thenReturn(Optional.of(insuranceEntity1));
