@@ -18,7 +18,7 @@ public class CarEntity {
 
   @Id
   @SequenceGenerator(name = "car_generator",
-      sequenceName = "car_id_seq", initialValue = 1)
+      sequenceName = "car_id_seq", initialValue = 2)
   @GeneratedValue(generator = "car_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;

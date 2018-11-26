@@ -17,7 +17,7 @@ public class AccountEntity {
 
   @Id
   @SequenceGenerator(name = "account_generator",
-      sequenceName = "account_id_seq", initialValue = 2)
+      sequenceName = "account_id_seq", initialValue = 3)
   @GeneratedValue(generator = "account_generator")
   @Column(name = "id", nullable = false, unique = true)
   private Long id;
